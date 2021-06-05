@@ -15,16 +15,19 @@ public class AllContactsController : IUIPage
 
     private void Start()
     {
-        m_view.AddListeners(FilterContacts); 
+        m_view.RemoveAllListeners();
+        m_view.AddListeners(FilterContacts,SortContactsAlphabetically,SortContactsByCreationDate); 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T)) 
+        {
+        }
     }
 
     public void Test() {
-        List<Contact> newlist = new List<Contact>();
-        for (int i = 0; i < 1; i++)
-        {
-            newlist.Add(myContacts[i]);
-        }
-        m_ContactsScrollView.Setup(myContacts.ToList<IPoolData>(), m_ContactFieldPrefab);       
+        m_ContactsScrollView.Setup(GetMyContactsAlphabetically().ToList<IPoolData>(), m_ContactFieldPrefab);       
     }
 
     public void FilterContacts(string text)
@@ -54,13 +57,23 @@ public class AllContactsController : IUIPage
         PlayfabManager.Instance.SaveNewContacts(myContacts);
     }
 
-    public void SortMyContactsAlphabetically() 
+    public void SortContactsAlphabetically() 
     {
-        myContacts.OrderBy(c => c.FirstName); 
+        m_ContactsScrollView.UpdatePooler(GetMyContactsAlphabetically().ToList<IPoolData>(), m_ContactFieldPrefab);
     }
 
-    public void SortMyContactsCreationTime()
+    public void SortContactsByCreationDate() 
     {
-        myContacts.OrderBy(c => c.DateAddedTimestamp);
+        m_ContactsScrollView.UpdatePooler(GetMyContactsByCreationTime().ToList<IPoolData>(), m_ContactFieldPrefab);
+    }
+
+    public List<Contact> GetMyContactsAlphabetically() 
+    {   
+        return myContacts.OrderBy(c => c.FirstName).ToList();
+    }
+
+    public List<Contact> GetMyContactsByCreationTime()
+    {
+        return myContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
     }
 }

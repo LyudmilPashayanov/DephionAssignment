@@ -73,7 +73,6 @@ public class PlayfabManager : MonoBehaviour
             if (result.Data.ContainsKey("myContacts"))
             {
                 List<Contact> myContacts = PlayFabSimpleJson.DeserializeObject<List<Contact>>(result.Data["myContacts"].Value);
-                Debug.Log("m_lastUnlockedLevel = " + myContacts[0].FirstName);
                 UIManager.Instance.m_ContactsUIController.myContacts = myContacts;
                 UIManager.Instance.m_ContactsUIController.Test();
                 //GameManager.Instance.InitializeGame();

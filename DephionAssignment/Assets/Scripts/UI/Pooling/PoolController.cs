@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using System.Linq;
 
 public class PoolController : MonoBehaviour, IBeginDragHandler
 {
@@ -12,7 +13,7 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
     [SerializeField] private RectTransform DragDetection;
     [SerializeField] private RectTransform Content;
 
-    private float ItemHeight;      // TODO: Replace it with dynamic height
+    private float ItemHeight;
     [SerializeField] private int BufferSize;
 
     private List<IPoolData> Pool;
@@ -46,6 +47,11 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
 
     public void UpdatePooler(List<IPoolData> list, RectTransform prefab) 
     {
+        if (list.SequenceEqual(Pool))
+        {
+            Debug.Log("they are already equal");
+            return;
+        }
         ScrollRect.onValueChanged.RemoveAllListeners();
         foreach (Transform child in Content)
         {
@@ -55,6 +61,7 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         PoolHead = 0;
         Setup(list,prefab);
     }
+
     public void OnDragDetectionPositionChange(Vector2 dragNormalizePos)
     {
         float dragDelta = DragDetection.anchoredPosition.y - DragDetectionAnchorPreviousY;
@@ -68,11 +75,8 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
 
     private void UpdateContentBuffer()
     {
-        Debug.Log("topItemOutOfView: " + TopItemOutOfView + "  >    bufferSize: " + BufferSize);
-
         if (TopItemOutOfView > BufferSize)
         {
-            Debug.Log("poolTail: " + PoolTail + " >= pool.Count: " + Pool.Count);
             if (PoolTail >= Pool.Count)
             {
                 return;

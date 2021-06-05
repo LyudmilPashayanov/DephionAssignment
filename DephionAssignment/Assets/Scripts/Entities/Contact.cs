@@ -14,7 +14,6 @@ public class Contact : IPoolData
             if (this.id == null)
             {
                 this.id = Guid.NewGuid().ToString();
-                Debug.Log("########## Id : " + this.id);
             }
             return this.id;
         }
@@ -35,7 +34,6 @@ public class Contact : IPoolData
             if (this.dateAddedTimestamp == 0)
             {
                 this.dateAddedTimestamp = DateTime.UtcNow.Ticks;
-                Debug.Log("########## dateAddedTimestamp : " + this.dateAddedTimestamp);
             }
             return this.dateAddedTimestamp;
         }
