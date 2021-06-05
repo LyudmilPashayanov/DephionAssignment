@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ContactsUIController : MonoBehaviour
+public class AllContactsUIController : IUIPage
 {
     public List<Contact> myContacts = new List<Contact>();
     public RectTransform m_ContactFieldPrefab;
