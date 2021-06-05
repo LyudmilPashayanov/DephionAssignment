@@ -17,8 +17,8 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
 
     private List<IPoolData> Pool;
     
-    private int PoolHead = 0;
-    private int PoolTail = 0;
+    private int PoolHead;
+    private int PoolTail;
 
     float DragDetectionAnchorPreviousY = 0;
 
@@ -30,8 +30,9 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         Pool = list;
         ItemHeight = prefab.rect.height;
         ScrollRect.onValueChanged.AddListener(OnDragDetectionPositionChange);
+        
         DragDetection.sizeDelta = new Vector2(DragDetection.sizeDelta.x, Pool.Count * ItemHeight);
-
+        
         for (int i = 0; i < TargetVisibleItemCount+BufferSize; i++)
         {
             if (Pool.Count - 1 < i) break;
@@ -43,6 +44,17 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         }
     }
 
+    public void UpdatePooler(List<IPoolData> list, RectTransform prefab) 
+    {
+        ScrollRect.onValueChanged.RemoveAllListeners();
+        foreach (Transform child in Content)
+        {
+            Destroy(child.gameObject);
+        }
+        PoolTail = 0;
+        PoolHead = 0;
+        Setup(list,prefab);
+    }
     public void OnDragDetectionPositionChange(Vector2 dragNormalizePos)
     {
         float dragDelta = DragDetection.anchoredPosition.y - DragDetectionAnchorPreviousY;

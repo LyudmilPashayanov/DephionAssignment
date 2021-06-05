@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     public SpriteAtlas m_ContactsAtlas;
 
-    public AllContactsUIController m_ContactsUIController;
+    public AllContactsController m_ContactsUIController;
     public CRUDContactController m_CRUDContactController;
 
     [SerializeField] private RectTransform m_UIPageHolder;
@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
             GoToUIPage(m_CRUDContactController);
         }
     }
+
     public void GoToUIPage(IUIPage pageToGoTo) 
     {
         m_UIPageHolder.DOAnchorPos(-pageToGoTo.GetPageLocation(), 0.3f);

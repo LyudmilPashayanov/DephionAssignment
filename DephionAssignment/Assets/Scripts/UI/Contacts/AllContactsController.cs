@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class AllContactsUIController : IUIPage
+public class AllContactsController : IUIPage
 {
+    [SerializeField] private AllContactsView m_view;
+
     public List<Contact> myContacts = new List<Contact>();
     public RectTransform m_ContactFieldPrefab;
-    public PoolController m_Pooler;
+    public PoolController m_ContactsScrollView;
+
+    private void Start()
+    {
+        m_view.AddListeners(FilterContacts); 
+    }
 
     public void Test() {
         List<Contact> newlist = new List<Contact>();
@@ -16,7 +24,20 @@ public class AllContactsUIController : IUIPage
         {
             newlist.Add(myContacts[i]);
         }
-        m_Pooler.Setup(myContacts.ToList<IPoolData>(), m_ContactFieldPrefab);       
+        m_ContactsScrollView.Setup(myContacts.ToList<IPoolData>(), m_ContactFieldPrefab);       
+    }
+
+    public void FilterContacts(string text)
+    {
+        List<Contact> filteredContacts = new List<Contact>();
+        foreach (Contact contact in myContacts)
+        {
+            if (contact.FirstName.Contains(text)) 
+            {
+                filteredContacts.Add(contact);
+            }
+        }
+        m_ContactsScrollView.UpdatePooler(filteredContacts.ToList<IPoolData>(), m_ContactFieldPrefab);
     }
 
     public void AddContact() 
