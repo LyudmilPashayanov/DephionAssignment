@@ -65,23 +65,12 @@ public class PlayfabManager : MonoBehaviour
             PlayFabId = m_PlayFabID
         }, result =>
         {
-            if (result.Data == null) 
-            { 
-                            
-            }
-
             if (result.Data.ContainsKey("myContacts"))
             {
-                List<Contact> myContacts = PlayFabSimpleJson.DeserializeObject<List<Contact>>(result.Data["myContacts"].Value);
-                UIManager.Instance.m_ContactsUIController.myContacts = myContacts;
-                UIManager.Instance.m_ContactsUIController.Test();
-                //GameManager.Instance.InitializeGame();
+                List<Contact> myContactsFromPlayfab = PlayFabSimpleJson.DeserializeObject<List<Contact>>(result.Data["myContacts"].Value);
+                ContactsCatalogManager.Instance.m_MyContacts = myContactsFromPlayfab;
             }
-            else
-            {
-                //GameManager.Instance.InitializeGame();
-            }
-
+            ContactsCatalogManager.Instance.Init();
         }, OnPlayFabError);
     }
 

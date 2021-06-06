@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class AllContactsController : IUIPage
 {
     [SerializeField] private AllContactsView m_view;
 
-    public List<Contact> myContacts = new List<Contact>();
+    public List<Contact> showedContacts = new List<Contact>();
+
     public RectTransform m_ContactFieldPrefab;
     public PoolController m_ContactsScrollView;
 
@@ -26,37 +28,44 @@ public class AllContactsController : IUIPage
         }
     }
 
-    public void Test() {
+    public void InitializeMyContacts(List<Contact> allContacts) 
+    {
+        showedContacts = allContacts;
         m_ContactsScrollView.Setup(GetMyContactsAlphabetically().ToList<IPoolData>(), m_ContactFieldPrefab);       
     }
 
     public void FilterContacts(string text)
     {
         List<Contact> filteredContacts = new List<Contact>();
-        foreach (Contact contact in myContacts)
+        foreach (Contact contact in ContactsCatalogManager.Instance.m_MyContacts)
         {
             if (contact.FirstName.Contains(text)) 
             {
                 filteredContacts.Add(contact);
             }
         }
+        showedContacts = filteredContacts;
         m_ContactsScrollView.UpdatePooler(filteredContacts.ToList<IPoolData>(), m_ContactFieldPrefab);
+        Debug.Log("filtering contacts.");
+        ChangeButtonToClear();
     }
 
-    public void AddContact() 
+    public void ChangeButtonToClear() 
     {
-        Contact newContact1 = new Contact()
+        m_view.ChangeIconToClearImage();
+        UnityAction newAction = new UnityAction(()=>
         {
-            FirstName = "ivan",
-            LastName = "petrov",
-            Description = "tapakov",
-            Email = "asd",
-            Phone = "_12341151"
-        };
-        myContacts.Add(newContact1);
-        PlayfabManager.Instance.SaveNewContacts(myContacts);
+            m_ContactsScrollView.UpdatePooler(ContactsCatalogManager.Instance.m_MyContacts.ToList<IPoolData>(), m_ContactFieldPrefab);
+            showedContacts = ContactsCatalogManager.Instance.m_MyContacts;
+            m_view.ClearSearchBar();
+            m_view.ChangeIconToMagnifierImage();
+            m_view.ChangeButtonToSearch();
+        });
+
+        m_view.ChangeButtonToClear(newAction);
     }
 
+    
     public void SortContactsAlphabetically() 
     {
         m_ContactsScrollView.UpdatePooler(GetMyContactsAlphabetically().ToList<IPoolData>(), m_ContactFieldPrefab);
@@ -69,11 +78,11 @@ public class AllContactsController : IUIPage
 
     public List<Contact> GetMyContactsAlphabetically() 
     {   
-        return myContacts.OrderBy(c => c.FirstName).ToList();
+        return showedContacts.OrderBy(c => c.FirstName).ToList();
     }
 
     public List<Contact> GetMyContactsByCreationTime()
     {
-        return myContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
+        return showedContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
     }
 }
