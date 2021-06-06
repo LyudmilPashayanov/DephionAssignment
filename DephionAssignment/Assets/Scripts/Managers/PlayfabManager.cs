@@ -65,18 +65,39 @@ public class PlayfabManager : MonoBehaviour
             PlayFabId = m_PlayFabID
         }, result =>
         {
+            List<Contact> contacts = new List<Contact>();
+            Contact myProfile = new Contact();
             if (result.Data.ContainsKey("myContacts"))
             {
-                List<Contact> myContactsFromPlayfab = PlayFabSimpleJson.DeserializeObject<List<Contact>>(result.Data["myContacts"].Value);
-                ContactsCatalogManager.Instance.m_MyContacts = myContactsFromPlayfab;
+                contacts = PlayFabSimpleJson.DeserializeObject<List<Contact>>(result.Data["myContacts"].Value);
+                Debug.Log("Getting my contacts data");
             }
-            ContactsCatalogManager.Instance.Init();
+            if (result.Data.ContainsKey("myProfile"))
+            {
+                myProfile = PlayFabSimpleJson.DeserializeObject<Contact>(result.Data["myProfile"].Value);
+                Debug.Log("Getting my profile data");
+            }
+
+            ContactsCatalogManager.Instance.Init(contacts, myProfile);
+
         }, OnPlayFabError);
     }
 
-    public void SaveNewContacts(List<Contact> newContacts)
+    public void SaveMyProfile(Contact myProfile) 
     {
-        string serializedList = PlayFabSimpleJson.SerializeObject(newContacts);
+        string mySerializedProfile = PlayFabSimpleJson.SerializeObject(myProfile);
+
+        UpdateUserDataRequest request = new UpdateUserDataRequest();
+        request.Data = new Dictionary<string, string>() {
+            {"myProfile", mySerializedProfile} };
+
+        PlayFabClientAPI.UpdateUserData(request,
+            result => Debug.Log("Successfully updated user data"),
+            OnPlayFabError);
+    }
+    public void SaveNewContacts()
+    {
+        string serializedList = PlayFabSimpleJson.SerializeObject(ContactsCatalogManager.Instance.m_MyContacts);
 
         UpdateUserDataRequest request = new UpdateUserDataRequest();
         request.Data = new Dictionary<string, string>() {

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4054043308342158549}
   - component: {fileID: 6499565318611510713}
   m_Layer: 5
-  m_Name: background
+  m_Name: background_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,9 +330,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1080ad36b318a44da0432f4861d2a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profilePhoto_image: {fileID: 6572108643918143618}
-  name_text: {fileID: 6572108643811534878}
-  secondary_text: {fileID: 6572108643968737798}
+  ProfilePhoto_Image: {fileID: 6572108643918143618}
+  Name_Text: {fileID: 6572108643811534878}
+  Secondary_Text: {fileID: 6572108643968737798}
+  MainFunctionality_Button: {fileID: 6499565318611510713}
 --- !u!1 &6572108643918143616
 GameObject:
   m_ObjectHideFlags: 0

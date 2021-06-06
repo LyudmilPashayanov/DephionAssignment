@@ -45,21 +45,52 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         }
     }
 
-    public void UpdatePooler(List<IPoolData> list, RectTransform prefab) 
+    //public void UpdatePooler(List<IPoolData> list, RectTransform prefab) 
+    //{
+    //    if (list.SequenceEqual(Pool))
+    //    {
+    //        Debug.Log("they are already equal");
+    //        return;
+    //    }
+    //    ScrollRect.onValueChanged.RemoveAllListeners();
+    //    foreach (Transform child in Content)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }
+    //    PoolTail = 0;
+    //    PoolHead = 0;
+    //    Setup(list,prefab);
+    //}
+
+    public void UpdatePooler(List<IPoolData> list,bool forceUpdate, RectTransform prefab = null)
     {
-        if (list.SequenceEqual(Pool))
+        if (list.SequenceEqual(Pool) && !forceUpdate)
         {
             Debug.Log("they are already equal");
             return;
         }
-        ScrollRect.onValueChanged.RemoveAllListeners();
-        foreach (Transform child in Content)
-        {
-            Destroy(child.gameObject);
-        }
+        
         PoolTail = 0;
         PoolHead = 0;
-        Setup(list,prefab);
+        if (Pool.Count < TargetVisibleItemCount + BufferSize)
+        {
+            ScrollRect.onValueChanged.RemoveAllListeners();
+            foreach (Transform child in Content)
+            {
+                Destroy(child.gameObject);
+            }
+            Setup(list,prefab);
+        }
+        else
+        {
+            Pool = list;
+            DragDetection.sizeDelta = new Vector2(DragDetection.sizeDelta.x, Pool.Count * ItemHeight);
+            foreach (Transform child in Content)
+            {
+                child.GetComponent<IPoolFields>().UpdateField(Pool[PoolTail]);
+                PoolTail++;
+            }
+        }
     }
 
     public void OnDragDetectionPositionChange(Vector2 dragNormalizePos)

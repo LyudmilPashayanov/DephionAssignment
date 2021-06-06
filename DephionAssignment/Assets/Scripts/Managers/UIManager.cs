@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get { return instance; } }
 
     public SpriteAtlas m_ContactsAtlas;
+    public SpriteAtlas m_ProfileImagesAtlas;
+
 
     public AllContactsController m_ContactsUIController;
     public CRUDContactController m_CRUDContactController;
@@ -21,14 +23,7 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) 
-        {
-            GoToUIPage(m_ContactsUIController);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            GoToUIPage(m_CRUDContactController);
-        }
+
     }
 
     public void GoToUIPage(IUIPage pageToGoTo) 

@@ -8,65 +8,76 @@ using UnityEngine.UI;
 
 public class AllContactsView : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField m_SearchField;
-    [SerializeField] private Button m_SortAlphabetically_button;
-    [SerializeField] private Button m_SortByCreationDate_button;
-    [SerializeField] private Button m_SearchField_button;
-    [SerializeField] private Image m_ClearOrSearch_image;
-
+    [SerializeField] private TMP_InputField Search_InputField;
+    [SerializeField] private TMP_InputField MyName_InputField;
+    [SerializeField] private Button SortAlphabetically_Button;
+    [SerializeField] private Button SortByCreationDate_Button;
+    [SerializeField] private Button SearchField_Button;
+    [SerializeField] private Image ClearOrSearch_Image;
+    [SerializeField] private Button AddContact_Button;
 
     public void RemoveAllListeners() 
     {
-        m_SortAlphabetically_button.onClick.RemoveAllListeners();
-        m_SortByCreationDate_button.onClick.RemoveAllListeners();
-        m_SearchField.onEndEdit.RemoveAllListeners();
-        m_SearchField_button.onClick.RemoveAllListeners();
+        SortAlphabetically_Button.onClick.RemoveAllListeners();
+        SortByCreationDate_Button.onClick.RemoveAllListeners();
+        Search_InputField.onEndEdit.RemoveAllListeners();
+        SearchField_Button.onClick.RemoveAllListeners();
+        AddContact_Button.onClick.RemoveAllListeners();
+        MyName_InputField.onEndEdit.RemoveAllListeners();
     }
 
-    public void AddListeners(UnityAction<string> filterOnEndEdit, UnityAction sortAlphabetically, UnityAction sortByDate) 
+    public void AddListeners(UnityAction<string> filterOnEndEdit, UnityAction sortAlphabetically, UnityAction sortByDate,UnityAction AddContactNavigation, UnityAction<string> OnEndAddingMyName, UnityAction<string> OnStartSearching) 
     {
-        m_SearchField.onEndEdit.AddListener(filterOnEndEdit);
-        m_SortAlphabetically_button.onClick.AddListener(sortAlphabetically);
-        m_SortByCreationDate_button.onClick.AddListener(sortByDate);
-        m_SearchField_button.onClick.AddListener(SelectSearchField);
+        Search_InputField.onEndEdit.AddListener(filterOnEndEdit);
+        Search_InputField.onSelect.AddListener(OnStartSearching);
+        SortAlphabetically_Button.onClick.AddListener(sortAlphabetically);
+        SortByCreationDate_Button.onClick.AddListener(sortByDate);
+        SearchField_Button.onClick.AddListener(SelectSearchField);
+        AddContact_Button.onClick.AddListener(AddContactNavigation);
+        MyName_InputField.onEndEdit.AddListener(OnEndAddingMyName);
     }
 
     public void SelectSearchField()
     {
-        m_SearchField.Select();
-        m_SearchField_button.onClick.RemoveAllListeners();
+        Search_InputField.Select();
+        SearchField_Button.onClick.RemoveAllListeners();
+    }
+
+    public void SetMyProfile(Contact myProfile) 
+    {
+        MyName_InputField.text = myProfile.FirstName;
     }
 
     public void ChangeButtonToClear(UnityAction clearSearchField) 
     {
-        m_SearchField_button.onClick.RemoveAllListeners();
-        m_SearchField_button.onClick.AddListener(clearSearchField);
+        SearchField_Button.onClick.RemoveAllListeners();
+        SearchField_Button.onClick.AddListener(clearSearchField);
     }
 
-    public void SetInteractableButton(bool active) 
+    public void SetButtonActive(bool active) 
     {
-        m_SearchField_button.interactable = active;
+        SearchField_Button.gameObject.SetActive(active);
     }
 
     public void ChangeIconToMagnifierImage() 
     {
-        m_ClearOrSearch_image.sprite = UIManager.Instance.m_ContactsAtlas.GetSprite("magnifier");
+        ClearOrSearch_Image.sprite = UIManager.Instance.m_ContactsAtlas.GetSprite("magnifier");
     }
 
     public void ChangeIconToClearImage() 
     {
-        m_ClearOrSearch_image.sprite = UIManager.Instance.m_ContactsAtlas.GetSprite("x_button");
+        ClearOrSearch_Image.sprite = UIManager.Instance.m_ContactsAtlas.GetSprite("x_button");
     }
 
     public void ChangeButtonToSearch() 
     {
-        m_SearchField_button.onClick.RemoveAllListeners();
-        m_SearchField_button.onClick.AddListener(SelectSearchField);
+        SearchField_Button.onClick.RemoveAllListeners();
+        SearchField_Button.onClick.AddListener(SelectSearchField);
     }
 
     public void ClearSearchBar()
     {
-        m_SearchField.text = string.Empty;
+        Search_InputField.text = string.Empty;
         Debug.Log("clearing the search bar");
     }
 }

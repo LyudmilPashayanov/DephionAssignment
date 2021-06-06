@@ -2,10 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ContactFieldController : MonoBehaviour, IPoolFields
 {
     public ContactFieldView m_view;
+
+
+    public void Start() 
+    {
+        
+    }
 
     public void UpdateField(IPoolData contactObject)
     {
@@ -25,5 +32,12 @@ public class ContactFieldController : MonoBehaviour, IPoolFields
             m_view.UpdateSecondaryText(contact.Email);
         else
             m_view.UpdateSecondaryText(contact.Twitter);
+
+        UnityAction newAction = new UnityAction(() =>
+        {
+            UIManager.Instance.m_CRUDContactController.InitContactEditor((Contact)contactObject);
+            UIManager.Instance.GoToUIPage(UIManager.Instance.m_CRUDContactController);
+        });
+        m_view.OnClickBehaviour(newAction);
     }
 }

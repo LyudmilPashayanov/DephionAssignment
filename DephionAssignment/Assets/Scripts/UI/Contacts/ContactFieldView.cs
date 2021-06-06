@@ -3,24 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using UnityEngine.Events;
 
 public class ContactFieldView : MonoBehaviour
 {
-    [SerializeField] private Image profilePhoto_image;
-    [SerializeField] private TextMeshProUGUI name_text;
-    [SerializeField] private TextMeshProUGUI secondary_text;
+    [SerializeField] private Image ProfilePhoto_Image;
+    [SerializeField] private TextMeshProUGUI Name_Text;
+    [SerializeField] private TextMeshProUGUI Secondary_Text;
+    [SerializeField] private Button MainFunctionality_Button;
     public void UpdateProfilePhoto(Sprite sprite) 
     {
-        profilePhoto_image.sprite = sprite; 
+        ProfilePhoto_Image.sprite = sprite; 
     }
 
     public void UpdateName(string name, string lastName) 
     {
-        name_text.text = string.Concat(name, " ", lastName);
+        Name_Text.text = string.Concat(name, " ", lastName);
     }
 
     public void UpdateSecondaryText(string secondaryText = "")
     {
-        secondary_text.text = secondaryText;
+        Secondary_Text.text = secondaryText;
+    }
+    
+    public void OnClickBehaviour(UnityAction action) 
+    {
+        MainFunctionality_Button.onClick.RemoveAllListeners();
+        MainFunctionality_Button.onClick.AddListener(action);
     }
 }
