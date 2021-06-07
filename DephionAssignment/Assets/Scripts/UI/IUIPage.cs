@@ -12,5 +12,5 @@ public abstract class IUIPage : MonoBehaviour
         return gameObject.transform.localPosition;
     }
 
-    public abstract void OnPageLeft();
+    public abstract void OnPageLeaving();
 }

@@ -19,7 +19,12 @@ public class AllContactsController : IUIPage
     {
         m_view.RemoveAllListeners();
         m_view.AddListeners(FilterContacts,SortContactsAlphabetically,SortContactsByCreationDate, GoToContactCreation, SaveMyName
-            ,new UnityAction<string>((string c)=>{ m_view.SetButtonActive(false); })); 
+            ,new UnityAction<string>((string c)=>{ m_view.SetButtonActive(false); }), GoToEditMyProfile);
+
+        ContactsCatalogManager.Instance.onContactAdded += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, true); });
+        ContactsCatalogManager.Instance.onContactEdited += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, false); });
+        ContactsCatalogManager.Instance.onMyProfileEdited += UpdateMyProfile;
+        ContactsCatalogManager.Instance.onContactDeleted += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, true); }); ;
     }
 
     private void Update()
@@ -37,7 +42,7 @@ public class AllContactsController : IUIPage
     }
 
     public void FilterContacts(string text)
-    {
+    {   
         List<Contact> filteredContacts = new List<Contact>();
         foreach (Contact contact in ContactsCatalogManager.Instance.m_MyContacts)
         {
@@ -52,7 +57,7 @@ public class AllContactsController : IUIPage
         ChangeButtonToClear();
     }
 
-    public void UpdatePooler(List<Contact> list, bool forceUpdate) 
+    public void UpdateListOfContacts(List<Contact> list, bool forceUpdate) 
     {
         showedContacts = list;
         m_ContactsScrollView.UpdatePooler(list.ToList<IPoolData>(), forceUpdate, m_ContactFieldPrefab);
@@ -78,8 +83,19 @@ public class AllContactsController : IUIPage
 
     public void GoToContactCreation()
     {
-        UIManager.Instance.m_CRUDContactController.InitContactEditor();
+        UIManager.Instance.m_CRUDContactController.CreateNewContact();
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_CRUDContactController);
+    }
+
+    public void GoToEditMyProfile()
+    {
+        UIManager.Instance.m_CRUDContactController.EditMyProfile();
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_CRUDContactController);
+    }
+
+    public void UpdateMyProfile() 
+    {
+        m_view.SetMyProfile(ContactsCatalogManager.Instance.m_MyProfile);    
     }
 
     public void SaveMyName(string myEditedName) 
@@ -107,7 +123,7 @@ public class AllContactsController : IUIPage
         return showedContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
     }
 
-    public override void OnPageLeft()
+    public override void OnPageLeaving()
     {
         ClearSearchBar();
     }

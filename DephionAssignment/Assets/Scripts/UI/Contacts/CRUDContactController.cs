@@ -8,22 +8,44 @@ public class CRUDContactController : IUIPage
     public CRUDControllerView m_view;
     private Contact CurrentlyEditedContact;
 
-    public void InitContactEditor(Contact ContactToEdit = null)
+    public void EditExistingContact(Contact contactToEdit)
     {
         m_view.RemoveListeners();
-        if (ContactToEdit != null) 
-        {
-            m_view.SetHeader("edit");
-            CurrentlyEditedContact = ContactToEdit;
-            m_view.EditContact(CurrentlyEditedContact);
-            m_view.SetListeners(SaveEditedContact, DiscardChanges);
+        m_view.SetHeader("edit");
+        CurrentlyEditedContact = contactToEdit;
+        m_view.EditContact(CurrentlyEditedContact);
+        m_view.SetListeners(SaveEditedContact, DiscardChanges,DeleteContact);
+        m_view.ActivateDeleteButton(true);
+    }
 
-        }
-        else 
-        {
-            m_view.SetHeader("create");
-            m_view.SetListeners(AddNewContact, DiscardChanges);
-        }
+    public void CreateNewContact()
+    {
+        m_view.RemoveListeners();
+        m_view.SetHeader("create");
+        m_view.ActivateDeleteButton(false);
+        m_view.SetListeners(AddNewContact, DiscardChanges,null);
+    }
+
+    public void EditMyProfile()
+    {
+        m_view.RemoveListeners();
+        m_view.SetHeader("my profile");
+        m_view.ActivateDeleteButton(false);
+        m_view.EditContact(ContactsCatalogManager.Instance.m_MyProfile);
+        m_view.SetListeners(UpdateMyProfile, DiscardChanges,null);
+    }
+
+    public void DeleteContact() 
+    {
+        ContactsCatalogManager.Instance.DeleteContact(CurrentlyEditedContact);
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
+    }
+
+    public void UpdateMyProfile() 
+    {
+        UpdateContact(ContactsCatalogManager.Instance.m_MyProfile);
+        ContactsCatalogManager.Instance.UpdatedMyProfile();
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
     public void DiscardChanges() 
@@ -37,7 +59,6 @@ public class CRUDContactController : IUIPage
         UpdateContact(CurrentlyEditedContact);
         ContactsCatalogManager.Instance.EditedContact();
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
-        //m_view.ClearAllFields();
     }
 
     public void AddNewContact()
@@ -58,7 +79,7 @@ public class CRUDContactController : IUIPage
         contactToUpdate.Twitter = m_view.GetCurrentlyWrittenTwitter();
     }
 
-    public override void OnPageLeft()
+    public override void OnPageLeaving()
     {
         m_view.ClearAllFields();
     }

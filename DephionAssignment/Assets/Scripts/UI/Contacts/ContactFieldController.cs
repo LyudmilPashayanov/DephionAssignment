@@ -35,7 +35,7 @@ public class ContactFieldController : MonoBehaviour, IPoolFields
 
         UnityAction newAction = new UnityAction(() =>
         {
-            UIManager.Instance.m_CRUDContactController.InitContactEditor((Contact)contactObject);
+            UIManager.Instance.m_CRUDContactController.EditExistingContact((Contact)contactObject);
             UIManager.Instance.GoToUIPage(UIManager.Instance.m_CRUDContactController);
         });
         m_view.OnClickBehaviour(newAction);

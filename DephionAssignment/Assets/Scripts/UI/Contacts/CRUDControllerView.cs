@@ -18,18 +18,25 @@ public class CRUDControllerView : MonoBehaviour
 
     [SerializeField] private Button Save_Button;
     [SerializeField] private Button Cancel_Button;
+    [SerializeField] private Button Delete_Button;
 
     public void RemoveListeners() 
     {
         Save_Button.onClick.RemoveAllListeners();
         Cancel_Button.onClick.RemoveAllListeners();
+        Delete_Button.onClick.RemoveAllListeners();
     }
 
-    public void SetListeners(UnityAction SaveButtonFunctionality, UnityAction CancelButtonFunctionality) 
+    public void SetListeners(UnityAction SaveButtonFunctionality, UnityAction CancelButtonFunctionality,UnityAction DeleteContact) 
     {
         Save_Button.onClick.AddListener(SaveButtonFunctionality);
         Cancel_Button.onClick.AddListener(CancelButtonFunctionality);
+        Delete_Button.onClick.AddListener(DeleteContact);
+    }
 
+    public void ActivateDeleteButton(bool active) 
+    {
+        Delete_Button.gameObject.SetActive(active);
     }
 
     public void SetHeader(string header) 

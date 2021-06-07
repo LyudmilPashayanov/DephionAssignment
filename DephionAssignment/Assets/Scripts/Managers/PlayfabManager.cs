@@ -82,16 +82,16 @@ public class PlayfabManager : MonoBehaviour
         }, OnPlayFabError);
     }
 
-    public void SaveMyProfile(Contact myProfile) 
+    public void SaveMyProfile() 
     {
-        string mySerializedProfile = PlayFabSimpleJson.SerializeObject(myProfile);
+        string mySerializedProfile = PlayFabSimpleJson.SerializeObject(ContactsCatalogManager.Instance.m_MyProfile);
 
         UpdateUserDataRequest request = new UpdateUserDataRequest();
         request.Data = new Dictionary<string, string>() {
             {"myProfile", mySerializedProfile} };
 
         PlayFabClientAPI.UpdateUserData(request,
-            result => Debug.Log("Successfully updated user data"),
+            result => Debug.Log("Successfully updated my profile"),
             OnPlayFabError);
     }
     public void SaveNewContacts()

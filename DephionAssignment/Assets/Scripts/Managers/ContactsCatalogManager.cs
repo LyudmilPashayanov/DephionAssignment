@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,12 @@ public class ContactsCatalogManager : MonoBehaviour
     public List<Contact> m_MyContacts = new List<Contact>();
     public Contact m_MyProfile = new Contact();
 
+    public event Action onContactAdded;
+    public event Action onContactEdited;
+    public event Action onMyProfileEdited;
+    public event Action onContactDeleted;
+
+
     void Awake()
     {
         instance = this;
@@ -21,7 +28,7 @@ public class ContactsCatalogManager : MonoBehaviour
         if (m_MyProfile.FirstName == null || !m_MyProfile.FirstName.Equals(editedName))
         {
             m_MyProfile.FirstName = editedName;
-            PlayfabManager.Instance.SaveMyProfile(m_MyProfile);
+            PlayfabManager.Instance.SaveMyProfile();
         }
     }
 
@@ -36,14 +43,27 @@ public class ContactsCatalogManager : MonoBehaviour
     {
         m_MyContacts.Add(contact);
         m_MyContacts = m_MyContacts.OrderBy(c => c.FirstName).ToList();
-        UIManager.Instance.m_AllContactsController.UpdatePooler(m_MyContacts,true);
+        onContactAdded?.Invoke();
         PlayfabManager.Instance.SaveNewContacts();
     }
 
     public void EditedContact() 
     {
         m_MyContacts = m_MyContacts.OrderBy(c => c.FirstName).ToList();
-        UIManager.Instance.m_AllContactsController.UpdatePooler(m_MyContacts, false);
+        onContactEdited?.Invoke();
+        PlayfabManager.Instance.SaveNewContacts();
+    }
+
+    public void UpdatedMyProfile() 
+    {
+        onMyProfileEdited?.Invoke();
+        PlayfabManager.Instance.SaveMyProfile();
+    }
+
+    public void DeleteContact(Contact contact) 
+    {
+        m_MyContacts.Remove(contact);
+        onContactDeleted?.Invoke();
         PlayfabManager.Instance.SaveNewContacts();
     }
 }

@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     public void GoToUIPage(IUIPage pageToGoTo)
     {
-        CurrentPage?.OnPageLeft();
+        CurrentPage?.OnPageLeaving();
         m_UIPageHolder.DOAnchorPos(-pageToGoTo.GetPageLocation(), 0.3f);
         CurrentPage = pageToGoTo;
     }

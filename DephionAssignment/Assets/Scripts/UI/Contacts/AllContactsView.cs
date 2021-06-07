@@ -15,7 +15,7 @@ public class AllContactsView : MonoBehaviour
     [SerializeField] private Button SearchField_Button;
     [SerializeField] private Image ClearOrSearch_Image;
     [SerializeField] private Button AddContact_Button;
-
+    [SerializeField] private Button MyProfile_Button;
     public void RemoveAllListeners() 
     {
         SortAlphabetically_Button.onClick.RemoveAllListeners();
@@ -24,9 +24,11 @@ public class AllContactsView : MonoBehaviour
         SearchField_Button.onClick.RemoveAllListeners();
         AddContact_Button.onClick.RemoveAllListeners();
         MyName_InputField.onEndEdit.RemoveAllListeners();
+        MyProfile_Button.onClick.RemoveAllListeners();
     }
 
-    public void AddListeners(UnityAction<string> filterOnEndEdit, UnityAction sortAlphabetically, UnityAction sortByDate,UnityAction AddContactNavigation, UnityAction<string> OnEndAddingMyName, UnityAction<string> OnStartSearching) 
+    public void AddListeners(UnityAction<string> filterOnEndEdit, UnityAction sortAlphabetically, UnityAction sortByDate,UnityAction AddContactNavigation,
+        UnityAction<string> OnEndAddingMyName, UnityAction<string> OnStartSearching,UnityAction EditMyProfile) 
     {
         Search_InputField.onEndEdit.AddListener(filterOnEndEdit);
         Search_InputField.onSelect.AddListener(OnStartSearching);
@@ -35,6 +37,7 @@ public class AllContactsView : MonoBehaviour
         SearchField_Button.onClick.AddListener(SelectSearchField);
         AddContact_Button.onClick.AddListener(AddContactNavigation);
         MyName_InputField.onEndEdit.AddListener(OnEndAddingMyName);
+        MyProfile_Button.onClick.AddListener(EditMyProfile);
     }
 
     public void SelectSearchField()
@@ -42,7 +45,7 @@ public class AllContactsView : MonoBehaviour
         Search_InputField.Select();
         SearchField_Button.onClick.RemoveAllListeners();
     }
-
+    
     public void SetMyProfile(Contact myProfile) 
     {
         MyName_InputField.text = myProfile.FirstName;
