@@ -29,21 +29,21 @@ public class ContactsCatalogManager : MonoBehaviour
     {
         m_MyContacts = myContacts;
         m_MyProfile = myProfile;
-        UIManager.Instance.m_ContactsUIController.InitializeMyContacts(m_MyContacts, m_MyProfile);
+        UIManager.Instance.m_AllContactsController.InitializeMyContacts(m_MyContacts, m_MyProfile);
     }
 
     public void CreateContact(Contact contact) 
     {
         m_MyContacts.Add(contact);
         m_MyContacts = m_MyContacts.OrderBy(c => c.FirstName).ToList();
-        UIManager.Instance.m_ContactsUIController.UpdatePooler(m_MyContacts,true);
+        UIManager.Instance.m_AllContactsController.UpdatePooler(m_MyContacts,true);
         PlayfabManager.Instance.SaveNewContacts();
     }
 
     public void EditedContact() 
     {
         m_MyContacts = m_MyContacts.OrderBy(c => c.FirstName).ToList();
-        UIManager.Instance.m_ContactsUIController.UpdatePooler(m_MyContacts, true);
+        UIManager.Instance.m_AllContactsController.UpdatePooler(m_MyContacts, false);
         PlayfabManager.Instance.SaveNewContacts();
     }
 }

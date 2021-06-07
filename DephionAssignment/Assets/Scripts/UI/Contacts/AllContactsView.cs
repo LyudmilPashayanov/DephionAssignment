@@ -75,6 +75,15 @@ public class AllContactsView : MonoBehaviour
         SearchField_Button.onClick.AddListener(SelectSearchField);
     }
 
+    public bool IsSearchBarEmpty() 
+    {
+        if(Search_InputField.text == string.Empty) 
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void ClearSearchBar()
     {
         Search_InputField.text = string.Empty;

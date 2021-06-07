@@ -2079,13 +2079,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d40db778bcfd3346983e1b273c3ef99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Search_InputField: {fileID: 0}
-  MyName_InputField: {fileID: 0}
-  SortAlphabetically_Button: {fileID: 0}
-  SortByCreationDate_Button: {fileID: 0}
-  SearchField_Button: {fileID: 0}
-  ClearOrSearch_Image: {fileID: 0}
-  AddContact_Button: {fileID: 0}
+  Search_InputField: {fileID: 838751099}
+  MyName_InputField: {fileID: 1274954566}
+  SortAlphabetically_Button: {fileID: 1467381774}
+  SortByCreationDate_Button: {fileID: 1086507801}
+  SearchField_Button: {fileID: 593613510}
+  ClearOrSearch_Image: {fileID: 593613508}
+  AddContact_Button: {fileID: 450575290}
 --- !u!1 &838751097
 GameObject:
   m_ObjectHideFlags: 0

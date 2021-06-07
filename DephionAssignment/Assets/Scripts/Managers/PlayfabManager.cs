@@ -77,9 +77,8 @@ public class PlayfabManager : MonoBehaviour
                 myProfile = PlayFabSimpleJson.DeserializeObject<Contact>(result.Data["myProfile"].Value);
                 Debug.Log("Getting my profile data");
             }
-
+            UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
             ContactsCatalogManager.Instance.Init(contacts, myProfile);
-
         }, OnPlayFabError);
     }
 

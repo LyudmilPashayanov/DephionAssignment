@@ -9,7 +9,8 @@ public abstract class IUIPage : MonoBehaviour
 {
     public Vector2 GetPageLocation() 
     {
-        Debug.Log("name: " + gameObject.name + " posit: "+gameObject.transform.localPosition);
         return gameObject.transform.localPosition;
     }
+
+    public abstract void OnPageLeft();
 }

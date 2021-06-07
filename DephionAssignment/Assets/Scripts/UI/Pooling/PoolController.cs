@@ -5,35 +5,36 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
-
+using DG.Tweening;
 public class PoolController : MonoBehaviour, IBeginDragHandler
 {
     [SerializeField] private ScrollRect ScrollRect;
     [SerializeField] private RectTransform ViewPort;
     [SerializeField] private RectTransform DragDetection;
     [SerializeField] private RectTransform Content;
-
     private float ItemHeight;
     [SerializeField] private int BufferSize;
-
     private List<IPoolData> Pool;
-    
     private int PoolHead;
     private int PoolTail;
-
     float DragDetectionAnchorPreviousY = 0;
 
     int TargetVisibleItemCount { get { return Mathf.Max(Mathf.CeilToInt(ViewPort.rect.height / ItemHeight), 0); } }
     int TopItemOutOfView { get { return Mathf.CeilToInt(Content.anchoredPosition.y / ItemHeight); } }
 
+    /// <summary>
+    /// Creates a scroll view with content from the passed "list" parameter. The content is presented in an optimized way, via object pooling technique.
+    /// </summary>
+    /// <param name="list">The list with which the scroll view will be filled</param>
+    /// <param name="prefab">A prefab with "IPoolField" attached to it, which will be shown in the scroll view.</param>
     public void Setup(List<IPoolData> list, RectTransform prefab)
     {
+        PoolHead = 0;
+        PoolTail = 0;
         Pool = list;
         ItemHeight = prefab.rect.height;
-        ScrollRect.onValueChanged.AddListener(OnDragDetectionPositionChange);
-        
+        ScrollRect.onValueChanged.AddListener(OnDragDetectionPositionChange);        
         DragDetection.sizeDelta = new Vector2(DragDetection.sizeDelta.x, Pool.Count * ItemHeight);
-        
         for (int i = 0; i < TargetVisibleItemCount+BufferSize; i++)
         {
             if (Pool.Count - 1 < i) break;
@@ -45,62 +46,49 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         }
     }
 
-    //public void UpdatePooler(List<IPoolData> list, RectTransform prefab) 
-    //{
-    //    if (list.SequenceEqual(Pool))
-    //    {
-    //        Debug.Log("they are already equal");
-    //        return;
-    //    }
-    //    ScrollRect.onValueChanged.RemoveAllListeners();
-    //    foreach (Transform child in Content)
-    //    {
-    //        Destroy(child.gameObject);
-    //    }
-    //    PoolTail = 0;
-    //    PoolHead = 0;
-    //    Setup(list,prefab);
-    //}
-
+    /// <summary>
+    /// Optimized way to update the fields in the scroll view.  
+    /// </summary>
+    /// <param name="list">The list with which the scroll view will be updated.</param>
+    /// <param name="forceUpdate">Pass "true" if you want to forcefully update the scroll view.</param>
+    /// <param name="prefab">The prefab which will be used to update the list.</param>
     public void UpdatePooler(List<IPoolData> list,bool forceUpdate, RectTransform prefab = null)
     {
-        if (list.SequenceEqual(Pool) && !forceUpdate)
+        if (forceUpdate || list.Count < TargetVisibleItemCount + BufferSize)
         {
-            Debug.Log("they are already equal");
-            return;
-        }
-        
-        PoolTail = 0;
-        PoolHead = 0;
-        if (Pool.Count < TargetVisibleItemCount + BufferSize)
-        {
+            Debug.Log("heavy pool update");
             ScrollRect.onValueChanged.RemoveAllListeners();
             foreach (Transform child in Content)
             {
                 Destroy(child.gameObject);
             }
-            Setup(list,prefab);
+            Setup(list,prefab); 
+            DragDetection.anchoredPosition = Vector2.zero;
+            Content.DOAnchorPos(Vector2.zero, 0.1f);
+            return;
         }
-        else
+        
+        Debug.Log("soft pool update");
+        Pool = list;
+        // Moves the scroll content to the top.
+        PoolTail = 0;
+        PoolHead = 0;
+        DragDetection.sizeDelta = new Vector2(DragDetection.sizeDelta.x, Pool.Count * ItemHeight);
+        DragDetection.anchoredPosition = Vector2.zero;
+        foreach (Transform child in Content)
         {
-            Pool = list;
-            DragDetection.sizeDelta = new Vector2(DragDetection.sizeDelta.x, Pool.Count * ItemHeight);
-            foreach (Transform child in Content)
-            {
-                child.GetComponent<IPoolFields>().UpdateField(Pool[PoolTail]);
-                PoolTail++;
-            }
+            child.GetComponent<IPoolFields>().UpdateField(Pool[PoolTail]);
+            PoolTail++;
         }
+        Content.DOAnchorPos(Vector2.zero,0.1f);
+        
     }
 
     public void OnDragDetectionPositionChange(Vector2 dragNormalizePos)
     {
         float dragDelta = DragDetection.anchoredPosition.y - DragDetectionAnchorPreviousY;
-
         Content.anchoredPosition = new Vector2(Content.anchoredPosition.x, Content.anchoredPosition.y + dragDelta);
-
         UpdateContentBuffer();
-
         DragDetectionAnchorPreviousY = DragDetection.anchoredPosition.y;
     }
 

@@ -11,7 +11,6 @@ public class CRUDContactController : IUIPage
     public void InitContactEditor(Contact ContactToEdit = null)
     {
         m_view.RemoveListeners();
-        
         if (ContactToEdit != null) 
         {
             m_view.SetHeader("edit");
@@ -30,15 +29,15 @@ public class CRUDContactController : IUIPage
     public void DiscardChanges() 
     {
         m_view.ClearAllFields();
-        UIManager.Instance.GoToUIPage(UIManager.Instance.m_ContactsUIController);
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
     public void SaveEditedContact() 
     {
         UpdateContact(CurrentlyEditedContact);
         ContactsCatalogManager.Instance.EditedContact();
-        UIManager.Instance.GoToUIPage(UIManager.Instance.m_ContactsUIController);
-        m_view.ClearAllFields();
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
+        //m_view.ClearAllFields();
     }
 
     public void AddNewContact()
@@ -46,8 +45,7 @@ public class CRUDContactController : IUIPage
         Contact newContact = new Contact();
         UpdateContact(newContact);
         ContactsCatalogManager.Instance.CreateContact(newContact);
-        UIManager.Instance.GoToUIPage(UIManager.Instance.m_ContactsUIController);
-        m_view.ClearAllFields();
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
     public void UpdateContact(Contact contactToUpdate) 
@@ -60,4 +58,8 @@ public class CRUDContactController : IUIPage
         contactToUpdate.Twitter = m_view.GetCurrentlyWrittenTwitter();
     }
 
+    public override void OnPageLeft()
+    {
+        m_view.ClearAllFields();
+    }
 }

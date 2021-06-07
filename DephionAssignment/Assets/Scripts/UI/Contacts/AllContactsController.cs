@@ -54,6 +54,7 @@ public class AllContactsController : IUIPage
 
     public void UpdatePooler(List<Contact> list, bool forceUpdate) 
     {
+        showedContacts = list;
         m_ContactsScrollView.UpdatePooler(list.ToList<IPoolData>(), forceUpdate, m_ContactFieldPrefab);
     }
 
@@ -61,19 +62,21 @@ public class AllContactsController : IUIPage
     {
         m_view.ChangeIconToClearImage();
         m_view.SetButtonActive(true);
-        UnityAction newAction = new UnityAction(()=>
-        {
-            m_ContactsScrollView.UpdatePooler(ContactsCatalogManager.Instance.m_MyContacts.ToList<IPoolData>(), false, m_ContactFieldPrefab);
-            showedContacts = ContactsCatalogManager.Instance.m_MyContacts;
-            m_view.ClearSearchBar();
-            m_view.ChangeIconToMagnifierImage();
-            m_view.ChangeButtonToSearch();
-            
-        });
-        m_view.ChangeButtonToClear(newAction);
+        m_view.ChangeButtonToClear(ClearSearchBar);
     }
 
-    public void GoToContactCreation() 
+    public void ClearSearchBar() 
+    {
+        if (m_view.IsSearchBarEmpty())
+            return;
+        showedContacts = ContactsCatalogManager.Instance.m_MyContacts;
+        m_ContactsScrollView.UpdatePooler(showedContacts.ToList<IPoolData>(), true, m_ContactFieldPrefab);
+        m_view.ClearSearchBar();
+        m_view.ChangeIconToMagnifierImage();
+        m_view.ChangeButtonToSearch();
+    }
+
+    public void GoToContactCreation()
     {
         UIManager.Instance.m_CRUDContactController.InitContactEditor();
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_CRUDContactController);
@@ -102,5 +105,10 @@ public class AllContactsController : IUIPage
     public List<Contact> GetMyContactsByCreationTime()
     {
         return showedContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
+    }
+
+    public override void OnPageLeft()
+    {
+        ClearSearchBar();
     }
 }

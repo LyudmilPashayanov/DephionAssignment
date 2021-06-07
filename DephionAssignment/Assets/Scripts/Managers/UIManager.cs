@@ -12,22 +12,19 @@ public class UIManager : MonoBehaviour
     public SpriteAtlas m_ContactsAtlas;
     public SpriteAtlas m_ProfileImagesAtlas;
 
-
-    public AllContactsController m_ContactsUIController;
+    public AllContactsController m_AllContactsController;
     public CRUDContactController m_CRUDContactController;
-
+    private IUIPage CurrentPage;
     [SerializeField] private RectTransform m_UIPageHolder;
     void Awake()
     {
         instance = this;
     }
-    private void Update()
-    {
 
-    }
-
-    public void GoToUIPage(IUIPage pageToGoTo) 
+    public void GoToUIPage(IUIPage pageToGoTo)
     {
+        CurrentPage?.OnPageLeft();
         m_UIPageHolder.DOAnchorPos(-pageToGoTo.GetPageLocation(), 0.3f);
+        CurrentPage = pageToGoTo;
     }
 }
