@@ -24,7 +24,7 @@ public class CRUDControllerView : MonoBehaviour
     [SerializeField] private Button EditPicture_Button;
 
     [SerializeField] private RectTransform EditPictureUI;
-
+    private string m_CurrentlySelectedImage;
 
     public void RemoveListeners() 
     {
@@ -87,6 +87,7 @@ public class CRUDControllerView : MonoBehaviour
     public void SetNewProfilePicture(string image) 
     {
         ProfilePicture_Image.sprite = UIManager.Instance.m_ProfileImagesAtlas.GetSprite(image);
+        m_CurrentlySelectedImage = image;
     }
 
     public void ShowEditPictureUI(bool active)
@@ -106,7 +107,6 @@ public class CRUDControllerView : MonoBehaviour
                 .AppendCallback(() => { EditPictureUI.gameObject.SetActive(false); });
     }
 
-
     public void ClearAllFields() 
     {
         FirstName_InputField.text = null;
@@ -116,6 +116,7 @@ public class CRUDControllerView : MonoBehaviour
         Email_InputField.text = null;
         Twitter_InputField.text= null;
     }
+
     public string GetCurrentlyWrittenFirstName() 
     {
         return FirstName_InputField.text;
@@ -144,5 +145,10 @@ public class CRUDControllerView : MonoBehaviour
     public string GetCurrentlyWrittenTwitter()
     {
         return Twitter_InputField.text;
+    }
+ 
+    public string CurrentlySelectedImage()
+    {
+        return m_CurrentlySelectedImage;
     }
 }

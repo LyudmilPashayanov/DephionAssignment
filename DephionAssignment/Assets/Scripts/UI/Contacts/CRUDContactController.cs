@@ -11,7 +11,7 @@ public class CRUDContactController : IUIPage
     [SerializeField] private CRUDControllerView m_view;
     public Contact m_CurrentlyEditedContact;
     [SerializeField] private EditPictureController EditPictureController;
-
+    
     public void EditExistingContact(Contact contactToEdit)
     {
         m_view.RemoveListeners();
@@ -71,7 +71,6 @@ public class CRUDContactController : IUIPage
 
     public void SetNewProfilePicture(string imageName) 
     {
-        m_CurrentlyEditedContact.Photo = imageName;
         m_view.SetNewProfilePicture(imageName);
         m_view.ShowEditPictureUI(false);
     }
@@ -98,6 +97,7 @@ public class CRUDContactController : IUIPage
         contactToUpdate.Description = m_view.GetCurrentlyWrittenDescription();
         contactToUpdate.Email = m_view.GetCurrentlyWrittenEmail();
         contactToUpdate.Twitter = m_view.GetCurrentlyWrittenTwitter();
+        contactToUpdate.Photo = m_view.CurrentlySelectedImage();
     }
 
     public override void OnPageLeaving()
