@@ -37,7 +37,7 @@ public class PlayfabManager : MonoBehaviour
         };
         PlayFabClientAPI.LoginWithAndroidDeviceID(request, OnLoginSuccess, OnPlayFabError);
 #endif
-#if UNITY_EDITOR
+#if !UNITY_ANDROID
         LoginWithCustomIDRequest request = new LoginWithCustomIDRequest
         {
             CustomId = SystemInfo.deviceUniqueIdentifier,
