@@ -10,14 +10,13 @@ public class ProfileImageFieldController : MonoBehaviour, IPoolFields
     {
         ThisProfileImage = (ProfileImage)objectToUpdate;
         m_view.SetImage(ThisProfileImage.PhotoSprite);
-        if (ThisProfileImage.PhotoName == UIManager.Instance.m_CRUDContactController.m_CurrentlyEditedContact.Photo)
+        if (ThisProfileImage.PhotoName == UIManager.Instance.m_CRUDContactController.GetCurrentlyDisplayedImage())
         {
             m_view.SetSelectedActive(true);
         }
         else { m_view.SetSelectedActive(false); }
         m_view.RemoveListeners();
         m_view.SetListeners(SelectImage);
-        
     }
 
     public void SelectImage() 

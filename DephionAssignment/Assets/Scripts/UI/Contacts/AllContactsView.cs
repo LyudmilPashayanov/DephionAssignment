@@ -19,7 +19,6 @@ public class AllContactsView : MonoBehaviour
     [SerializeField] private Button ProfilePicture_Button;
     [SerializeField] private Image ProfilePicture_Image;
 
-
     public void RemoveAllListeners() 
     {
         SortAlphabetically_Button.onClick.RemoveAllListeners();
@@ -97,6 +96,5 @@ public class AllContactsView : MonoBehaviour
     public void ClearSearchBar()
     {
         Search_InputField.text = string.Empty;
-        Debug.Log("clearing the search bar");
     }
 }

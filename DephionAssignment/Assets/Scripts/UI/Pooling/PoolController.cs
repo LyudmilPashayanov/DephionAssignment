@@ -56,7 +56,6 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
     {
         if (forceUpdate || list.Count < TargetVisibleItemCount + BufferSize)
         {
-            Debug.Log("heavy pool update");
             ScrollRect.onValueChanged.RemoveAllListeners();
             foreach (Transform child in Content)
             {
@@ -67,8 +66,7 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
             Content.DOAnchorPos(Vector2.zero, 0.1f);
             return;
         }
-        
-        Debug.Log("soft pool update");
+       
         Pool = list;
         // Moves the scroll content to the top.
         PoolTail = 0;

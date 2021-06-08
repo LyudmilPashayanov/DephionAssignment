@@ -12,10 +12,6 @@ public class PlayfabManager : MonoBehaviour
     public static PlayfabManager Instance { get { return instance; } }
     private string m_TitleId = "E469A";
     private string m_PlayFabID = "";
-    public DateTime ServerTime
-    {
-        get; private set;
-    }
 
     void Awake()
     {
@@ -37,7 +33,6 @@ public class PlayfabManager : MonoBehaviour
             AndroidDeviceId = SystemInfo.deviceUniqueIdentifier,
             CreateAccount = true
         };
-        Debug.Log(" Logging with android account!!!");
         PlayFabClientAPI.LoginWithAndroidDeviceID(request, OnLoginSuccess, OnPlayFabError);
 #endif
 #if UNITY_EDITOR
@@ -46,20 +41,18 @@ public class PlayfabManager : MonoBehaviour
             CustomId = SystemInfo.deviceUniqueIdentifier,
             CreateAccount = true
         };
-
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnPlayFabError);
 #endif
     }
+
     private void OnLoginSuccess(PlayFab.ClientModels.LoginResult result)
     {
-
         m_PlayFabID = result.PlayFabId;
-        Debug.Log("PlayFabID: " + m_PlayFabID);
         GetTitleData();
     }
+
     private void GetTitleData() 
     {
-        Debug.Log("getting TD");
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(),
         result =>
         {
@@ -70,14 +63,11 @@ public class PlayfabManager : MonoBehaviour
                 {
                     availablePictures = PlayFabSimpleJson.DeserializeObject<List<string>>(result.Data["pictures"]);
                     ContactsCatalogManager.Instance.SetAvailablePictures(availablePictures);
-                    Debug.Log("Getting the available pictures");
                 }
                 GetPlayerData();
             }
-            
         }, 
         OnPlayFabError);
-        
     }
 
     private void GetPlayerData() 
@@ -92,12 +82,10 @@ public class PlayfabManager : MonoBehaviour
             if (result.Data.ContainsKey("myContacts"))
             {
                 contacts = PlayFabSimpleJson.DeserializeObject<List<Contact>>(result.Data["myContacts"].Value);
-                Debug.Log("Getting my contacts data");
             }
             if (result.Data.ContainsKey("myProfile"))
             {
                 myProfile = PlayFabSimpleJson.DeserializeObject<Contact>(result.Data["myProfile"].Value);
-                Debug.Log("Getting my profile data");
             }
             ContactsCatalogManager.Instance.Init(contacts, myProfile);
             DoneLoading();
@@ -119,7 +107,7 @@ public class PlayfabManager : MonoBehaviour
             {"myProfile", mySerializedProfile} };
 
         PlayFabClientAPI.UpdateUserData(request,
-            result => Debug.Log("Successfully updated my profile"),
+            result => { },
             OnPlayFabError);
     }
     public void SaveNewContacts()
@@ -131,7 +119,7 @@ public class PlayfabManager : MonoBehaviour
             {"myContacts", serializedList} };
 
         PlayFabClientAPI.UpdateUserData(request,
-            result => Debug.Log("Successfully updated user data"),
+            result => { },
             OnPlayFabError);
     }
 
@@ -140,6 +128,6 @@ public class PlayfabManager : MonoBehaviour
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         Debug.Log("ON PLAYFAB ERROR  " + error.ErrorMessage);
 #endif
-        //ShowConnectionError();
+        UIManager.Instance.SetNoConnectionError();
     }
 }

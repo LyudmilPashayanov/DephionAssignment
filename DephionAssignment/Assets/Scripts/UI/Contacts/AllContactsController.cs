@@ -11,7 +11,6 @@ public class AllContactsController : IUIPage
     [SerializeField] private AllContactsView m_view;
 
     private List<Contact> ShowedContacts = new List<Contact>();
-
     public RectTransform m_ContactFieldPrefab;
     public PoolController m_ContactsScrollView;
 
@@ -20,7 +19,6 @@ public class AllContactsController : IUIPage
         m_view.RemoveAllListeners();
         m_view.AddListeners(FilterContacts,SortContactsAlphabetically,SortContactsByCreationDate, GoToContactCreation, SaveMyName
             ,new UnityAction<string>((string c)=>{ m_view.SetButtonActive(false); }), GoToEditMyProfile);
-
         ContactsCatalogManager.Instance.onContactAdded += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, true); });
         ContactsCatalogManager.Instance.onContactEdited += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, false); });
         ContactsCatalogManager.Instance.onMyProfileEdited += UpdateMyProfile;
@@ -46,7 +44,6 @@ public class AllContactsController : IUIPage
         }
         ShowedContacts = filteredContacts;
         m_ContactsScrollView.UpdatePooler(filteredContacts.ToList<IPoolData>(),false,m_ContactFieldPrefab);
-        Debug.Log("filtering contacts.");
         ChangeButtonToClear();
     }
 

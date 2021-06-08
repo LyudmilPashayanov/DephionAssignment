@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-
 public class ProfileImageFieldView : MonoBehaviour
 {
     [SerializeField] private Button Select_Button;

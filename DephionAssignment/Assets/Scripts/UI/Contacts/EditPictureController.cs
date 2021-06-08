@@ -12,26 +12,20 @@ public class EditPictureController : MonoBehaviour
     public List<ProfileImage> m_ShowedImages = new List<ProfileImage>();
     public RectTransform m_ProfilePicturePrefab;
     public PoolController m_ProfilePicturesScrollView;
-    bool scrollFull;
+    private bool IsScrollFull;
 
     public void InitEditPicture(UnityAction<string> SavePicture, List<ProfileImage> ImagesToShow)
     {
         m_view.SetHeaderText("select image");
         m_ShowedImages = ImagesToShow;
-        if (!scrollFull)
+        if (!IsScrollFull)
         {       
             m_ProfilePicturesScrollView.Setup(m_ShowedImages.ToList<IPoolData>(), m_ProfilePicturePrefab);
-            scrollFull = true;
+            IsScrollFull = true;
         }
         else 
         {
             m_ProfilePicturesScrollView.UpdatePooler(m_ShowedImages.ToList<IPoolData>(), false);
         }
     }
-
-    public void SavePictures(UnityAction<string> methodToInvoke) 
-    { 
-        
-    }
-
 }

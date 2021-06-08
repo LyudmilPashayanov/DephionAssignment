@@ -12,17 +12,15 @@ public class ContactFieldController : MonoBehaviour, IPoolFields
     {
         Contact contact = (Contact)contactObject;
         gameObject.name = contact.FirstName;
+        m_view.UpdateName(contact.FirstName, contact.LastName);
         if (contact.Photo != null)
             m_view.UpdateProfilePhoto(ContactsCatalogManager.Instance.GetProfileImage(contact.Photo));
-
-        m_view.UpdateName(contact.FirstName, contact.LastName);
-        if(contact.Phone != null)
+        if(!string.IsNullOrEmpty(contact.Phone))
             m_view.UpdateSecondaryText(contact.Phone);
-        else if(contact.Email != null)
+        else if(!string.IsNullOrEmpty(contact.Email))
             m_view.UpdateSecondaryText(contact.Email);
         else
             m_view.UpdateSecondaryText(contact.Twitter);
-
         UnityAction newAction = new UnityAction(() =>
         {
             UIManager.Instance.m_CRUDContactController.EditExistingContact((Contact)contactObject);

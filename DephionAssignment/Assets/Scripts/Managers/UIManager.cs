@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using DG.Tweening;
 using UnityEngine.UI;
-
+using TMPro;
 public class UIManager : MonoBehaviour
 {
     static UIManager instance;
@@ -12,13 +12,14 @@ public class UIManager : MonoBehaviour
 
     public SpriteAtlas m_ContactsAtlas;
     public SpriteAtlas m_ProfileImagesAtlas;
-
     public AllContactsController m_AllContactsController;
     public CRUDContactController m_CRUDContactController;
     private IUIPage CurrentPage;
     [SerializeField] private RectTransform UIPageHolder;
     [SerializeField] private RectTransform LoadingScreen;
+    [SerializeField] private TextMeshProUGUI LoadingScreenText;
     private CanvasScaler CanvasScaler;
+
     void Awake()
     {
         instance = this;
@@ -37,8 +38,15 @@ public class UIManager : MonoBehaviour
     {
         return new Vector2(CanvasScaler.referenceResolution.x,CanvasScaler.referenceResolution.y);
     }
+
     public void SetLoadingScreen(bool active) 
     {
         LoadingScreen.gameObject.SetActive(active);
+    }
+
+    public void SetNoConnectionError() 
+    {
+        LoadingScreen.gameObject.SetActive(true);
+        LoadingScreenText.text = "No Connection, please restart.";
     }
 }
