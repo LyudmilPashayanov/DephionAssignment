@@ -12,12 +12,10 @@ public class ContactsCatalogManager : MonoBehaviour
     public List<Contact> m_MyContacts = new List<Contact>();
     public Contact m_MyProfile = new Contact();
     public List<ProfileImage> m_ProfileImages = new List<ProfileImage>();
-
     public event Action onContactAdded;
     public event Action onContactEdited;
     public event Action onMyProfileEdited;
     public event Action onContactDeleted;
-
 
     void Awake()
     {
@@ -32,7 +30,11 @@ public class ContactsCatalogManager : MonoBehaviour
             PlayfabManager.Instance.SaveMyProfile();
         }
     }
-
+    /// <summary>
+    /// Starts the app and populates the first visible page a.k.a. the "All Contacts" UI page.
+    /// </summary>
+    /// <param name="myContacts"></param>
+    /// <param name="myProfile"></param>
     public void Init(List<Contact> myContacts, Contact myProfile)
     {
         m_MyContacts = myContacts;
@@ -40,6 +42,11 @@ public class ContactsCatalogManager : MonoBehaviour
         UIManager.Instance.m_AllContactsController.InitializeMyContacts(m_MyContacts, m_MyProfile);
     }
 
+
+    /// <summary>
+    /// Sets the pictures, which were received from the server.
+    /// </summary>
+    /// <param name="imagesAvailable"></param>
     public void SetAvailablePictures(List<string> imagesAvailable) 
     {
         foreach (var imageName in imagesAvailable)

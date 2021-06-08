@@ -6,6 +6,9 @@ using TMPro;
 using System;
 using UnityEngine.Events;
 
+/// <summary>
+/// Class responsible only for the visuals of the Contact Field.
+/// </summary>
 public class ContactFieldView : MonoBehaviour
 {
     [SerializeField] private Image ProfilePhoto_Image;

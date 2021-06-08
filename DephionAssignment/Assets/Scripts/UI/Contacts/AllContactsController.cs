@@ -14,7 +14,7 @@ public class AllContactsController : IUIPage
     public RectTransform m_ContactFieldPrefab;
     public PoolController m_ContactsScrollView;
 
-    private void Start()
+    private void Start() // Sets the functionality of all buttons and subscribed to listen for contact changes. (prepares the UI page for use)
     {
         m_view.RemoveAllListeners();
         m_view.AddListeners(FilterContacts,SortContactsAlphabetically,SortContactsByCreationDate, GoToContactCreation, SaveMyName
@@ -25,6 +25,11 @@ public class AllContactsController : IUIPage
         ContactsCatalogManager.Instance.onContactDeleted += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, true); }); ;
     }
 
+    /// <summary>
+    /// Sets the data received from the server on the UI Page.
+    /// </summary>
+    /// <param name="allContacts"></param>
+    /// <param name="m_MyProfile"></param>
     public void InitializeMyContacts(List<Contact> allContacts, Contact m_MyProfile) 
     {
         ShowedContacts = allContacts;
@@ -32,6 +37,10 @@ public class AllContactsController : IUIPage
         m_view.SetMyProfile(m_MyProfile);
     }
 
+    /// <summary>
+    /// Filters the contacts in the scroll view, depending on the parameter given.
+    /// </summary>
+    /// <param name="text"></param>
     public void FilterContacts(string text)
     {   
         List<Contact> filteredContacts = new List<Contact>();
@@ -47,6 +56,11 @@ public class AllContactsController : IUIPage
         ChangeButtonToClear();
     }
 
+    /// <summary>
+    /// Updates the contact fields in the scroll view.
+    /// </summary>
+    /// <param name="list">The new list with which the scroll view will be updated</param>
+    /// <param name="forceUpdate">True: Reload the whole scroll view, but more heavy on performance. Give true only if contact is added or removed.</param>
     public void UpdateListOfContacts(List<Contact> list, bool forceUpdate) 
     {
         ShowedContacts = list;

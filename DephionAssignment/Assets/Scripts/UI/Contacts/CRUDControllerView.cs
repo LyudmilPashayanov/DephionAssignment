@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using DG.Tweening;
+
+/// <summary>
+/// Class responsible only for the visuals of the "CRUD Contact" UI Page.
+/// </summary>
 public class CRUDControllerView : MonoBehaviour
 {
     [SerializeField] private TMP_InputField FirstName_InputField;

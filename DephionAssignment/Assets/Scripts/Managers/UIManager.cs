@@ -27,6 +27,10 @@ public class UIManager : MonoBehaviour
         CanvasScaler = gameObject.GetComponent<CanvasScaler>();
     }
 
+    /// <summary>
+    /// Provide a UI controller with IUIPage, so that you navigate to that page.
+    /// </summary>
+    /// <param name="pageToGoTo"></param>
     public void GoToUIPage(IUIPage pageToGoTo)
     {
         CurrentPage?.OnPageLeaving();

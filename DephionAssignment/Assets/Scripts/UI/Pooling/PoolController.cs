@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 using DG.Tweening;
+
+/// <summary>
+/// Marks a Scroll View as one to use the UI pooling technique, in order to save performance.
+/// </summary>
 public class PoolController : MonoBehaviour, IBeginDragHandler
 {
     [SerializeField] private ScrollRect ScrollRect;
@@ -13,12 +17,16 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
     [SerializeField] private RectTransform DragDetection;
     [SerializeField] private RectTransform Content;
     private float ItemHeight;
+    [Tooltip("How much extra items to put in the Content, so that fast scrolling doesn't show emptiness")]
     [SerializeField] private int BufferSize;
     private List<IPoolData> Pool;
     private int PoolHead;
     private int PoolTail;
     float DragDetectionAnchorPreviousY = 0;
 
+    /// <summary>
+    /// Calculates how many items from the "Pool" list can be visible in the Content section. 
+    /// </summary>
     int TargetVisibleItemCount { get { return Mathf.Max(Mathf.CeilToInt(ViewPort.rect.height / ItemHeight), 0); } }
     int TopItemOutOfView { get { return Mathf.CeilToInt(Content.anchoredPosition.y / ItemHeight); } }
 
@@ -50,7 +58,7 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
     /// Optimized way to update the fields in the scroll view.  
     /// </summary>
     /// <param name="list">The list with which the scroll view will be updated.</param>
-    /// <param name="forceUpdate">Pass "true" if you want to forcefully update the scroll view.</param>
+    /// <param name="forceUpdate">Pass "true" if you want to forcefully update the scroll view, but heavy on performance.</param>
     /// <param name="prefab">The prefab which will be used to update the list.</param>
     public void UpdatePooler(List<IPoolData> list,bool forceUpdate, RectTransform prefab = null)
     {
@@ -81,6 +89,10 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         Content.DOAnchorPos(Vector2.zero,0.1f);
     }
 
+    /// <summary>
+    /// Constantly checks when being dragged to see if needed to update the Content.
+    /// </summary>
+    /// <param name="dragNormalizePos"></param>
     public void OnDragDetectionPositionChange(Vector2 dragNormalizePos)
     {
         float dragDelta = DragDetection.anchoredPosition.y - DragDetectionAnchorPreviousY;
@@ -89,6 +101,9 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         DragDetectionAnchorPreviousY = DragDetection.anchoredPosition.y;
     }
 
+    /// <summary>
+    /// Checks what is in the view and updates to show relevant data.
+    /// </summary>
     private void UpdateContentBuffer()
     {
         if (TopItemOutOfView > BufferSize)

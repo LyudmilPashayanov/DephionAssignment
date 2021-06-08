@@ -11,7 +11,11 @@ public class CRUDContactController : IUIPage
     [SerializeField] private CRUDControllerView m_view;
     public Contact m_CurrentlyEditedContact;
     [SerializeField] private EditPictureController EditPictureController;
-    
+
+    /// <summary>
+    /// Starts the "CRUD Contact" UI with the purpose to edit an already existing contact
+    /// </summary>
+    /// <param name="contactToEdit"></param>
     public void EditExistingContact(Contact contactToEdit)
     {
         m_view.RemoveListeners();
@@ -21,7 +25,9 @@ public class CRUDContactController : IUIPage
         m_view.SetListeners(SaveEditedContact,new UnityAction(()=> OpenAreYouSureDialog(true)), DeleteContact, OpenEditPicture,DiscardChanges, new UnityAction(() => OpenAreYouSureDialog(false)));
         m_view.ActivateDeleteButton(true);
     }
-
+    /// <summary>
+    /// Starts the "CRUD Contact" UI with the purpose to create and add a new contact
+    /// </summary>
     public void CreateNewContact()
     {
         m_view.RemoveListeners();
@@ -31,7 +37,9 @@ public class CRUDContactController : IUIPage
         m_view.EditContact(m_CurrentlyEditedContact);
         m_view.SetListeners(AddNewContact, new UnityAction(() => OpenAreYouSureDialog(true)), null, OpenEditPicture,DiscardChanges, new UnityAction(() => OpenAreYouSureDialog(false)));
     }
-
+    /// <summary>
+    /// Starts the "CRUD Contact" UI with the purpose to edit my profile
+    /// </summary>
     public void EditMyProfile()
     {
         m_view.RemoveListeners();
@@ -42,6 +50,9 @@ public class CRUDContactController : IUIPage
         m_view.SetListeners(UpdateMyProfile, new UnityAction(() => OpenAreYouSureDialog(true)), null, OpenEditPicture,DiscardChanges, new UnityAction(() => OpenAreYouSureDialog(false)));
     }
 
+    /// <summary>
+    /// Deletes the currently edited contact.
+    /// </summary>
     public void DeleteContact() 
     {
         ContactsCatalogManager.Instance.DeleteContact(m_CurrentlyEditedContact);
@@ -49,6 +60,9 @@ public class CRUDContactController : IUIPage
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
+    /// <summary>
+    /// Updates my profile with the new edited data.
+    /// </summary>
     public void UpdateMyProfile() 
     {
         UpdateContact(m_CurrentlyEditedContact);
@@ -56,18 +70,27 @@ public class CRUDContactController : IUIPage
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
-
+    /// <summary>
+    /// Prompts a dialog to double check if you want to leave the "CRUD contact" UI.
+    /// </summary>
+    /// <param name="active"></param>
     public void OpenAreYouSureDialog(bool active) 
     {
         m_view.AreYouSureTurnActive(active);   
     }
 
+    /// <summary>
+    /// Discards all changes done in the "CRUD Contact" UI and goes back to the "All Contacts" View
+    /// </summary>
     public void DiscardChanges() 
     {
         m_CurrentlyEditedContact = null;
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
+    /// <summary>
+    /// Opens the "Select Image" UI
+    /// </summary>
     public void OpenEditPicture() 
     {
         EditPictureController.InitEditPicture(SetNewProfilePicture,
@@ -80,7 +103,9 @@ public class CRUDContactController : IUIPage
         m_view.SetProfilePicture(imageName);
         m_view.ShowEditPictureUI(false);
     }
-
+    /// <summary>
+    /// Saves a contact with its new edited data (if the conditions are met).
+    /// </summary>
     public void SaveEditedContact() 
     {
         UpdateContact(m_CurrentlyEditedContact);
@@ -93,6 +118,9 @@ public class CRUDContactController : IUIPage
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
+    /// <summary>
+    /// Adds a new contact (if the conditions are met).
+    /// </summary>
     public void AddNewContact()
     {
         UpdateContact(m_CurrentlyEditedContact);
@@ -105,7 +133,12 @@ public class CRUDContactController : IUIPage
         ContactsCatalogManager.Instance.CreateContact(m_CurrentlyEditedContact);
         UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
-
+   
+    /// <summary>
+    /// Conditions in order to add or edit a contact. There should be at least one field which is not null or empty.
+    /// </summary>
+    /// <param name="contact"></param>
+    /// <returns></returns>
     public bool CheckIfContactIsNull(Contact contact) 
     {
         if (string.IsNullOrEmpty(contact.Email) && string.IsNullOrEmpty(contact.Twitter) &&
@@ -121,6 +154,10 @@ public class CRUDContactController : IUIPage
         return m_view.GetCurrentlySelectedImage();
     }
 
+    /// <summary>
+    /// Applies everything from the "CRUD Contacts UI" to the currently edited Contact.
+    /// </summary>
+    /// <param name="contactToUpdate"></param>
     public void UpdateContact(Contact contactToUpdate) 
     {
         contactToUpdate.FirstName = m_view.GetCurrentlyWrittenFirstName();

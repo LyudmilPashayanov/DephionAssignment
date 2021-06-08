@@ -14,6 +14,11 @@ public class EditPictureController : MonoBehaviour
     public PoolController m_ProfilePicturesScrollView;
     private bool IsScrollFull;
 
+    /// <summary>
+    /// Shows all available images you can choose from for a profile image.
+    /// </summary>
+    /// <param name="SavePicture"></param>
+    /// <param name="ImagesToShow"></param>
     public void InitEditPicture(UnityAction<string> SavePicture, List<ProfileImage> ImagesToShow)
     {
         m_view.SetHeaderText("select image");

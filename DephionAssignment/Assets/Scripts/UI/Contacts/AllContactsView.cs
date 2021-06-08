@@ -6,6 +6,9 @@ using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class responsible only for the visuals of the "All Contacts" UI Page.
+/// </summary>
 public class AllContactsView : MonoBehaviour
 {
     [SerializeField] private TMP_InputField Search_InputField;
