@@ -55,10 +55,32 @@ public class PlayfabManager : MonoBehaviour
 
         m_PlayFabID = result.PlayFabId;
         Debug.Log("PlayFabID: " + m_PlayFabID);
-        GetMyData();
+        GetTitleData();
+    }
+    private void GetTitleData() 
+    {
+        Debug.Log("getting TD");
+        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(),
+        result =>
+        {
+            List<string> availablePictures;
+            if (result.Data != null) 
+            {
+                if (result.Data.ContainsKey("pictures"))
+                {
+                    availablePictures = PlayFabSimpleJson.DeserializeObject<List<string>>(result.Data["pictures"]);
+                    ContactsCatalogManager.Instance.SetAvailablePictures(availablePictures);
+                    Debug.Log("Getting the available pictures");
+                }
+                GetPlayerData();
+            }
+            
+        }, 
+        OnPlayFabError);
+        
     }
 
-    private void GetMyData() 
+    private void GetPlayerData() 
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
         {
@@ -77,9 +99,15 @@ public class PlayfabManager : MonoBehaviour
                 myProfile = PlayFabSimpleJson.DeserializeObject<Contact>(result.Data["myProfile"].Value);
                 Debug.Log("Getting my profile data");
             }
-            UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
             ContactsCatalogManager.Instance.Init(contacts, myProfile);
+            DoneLoading();
         }, OnPlayFabError);
+    }
+
+    public void DoneLoading()
+    {
+        UIManager.Instance.SetLoadingScreen(false);
+        UIManager.Instance.GoToUIPage(UIManager.Instance.m_AllContactsController);
     }
 
     public void SaveMyProfile() 

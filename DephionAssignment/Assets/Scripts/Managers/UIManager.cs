@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,16 +16,29 @@ public class UIManager : MonoBehaviour
     public AllContactsController m_AllContactsController;
     public CRUDContactController m_CRUDContactController;
     private IUIPage CurrentPage;
-    [SerializeField] private RectTransform m_UIPageHolder;
+    [SerializeField] private RectTransform UIPageHolder;
+    [SerializeField] private RectTransform LoadingScreen;
+    private CanvasScaler CanvasScaler;
     void Awake()
     {
         instance = this;
+        SetLoadingScreen(true);
+        CanvasScaler = gameObject.GetComponent<CanvasScaler>();
     }
 
     public void GoToUIPage(IUIPage pageToGoTo)
     {
         CurrentPage?.OnPageLeaving();
-        m_UIPageHolder.DOAnchorPos(-pageToGoTo.GetPageLocation(), 0.3f);
+        UIPageHolder.DOAnchorPos(-pageToGoTo.GetPageLocation(), 0.3f);
         CurrentPage = pageToGoTo;
+    }
+
+    public Vector2 GetCanvasSize() 
+    {
+        return new Vector2(CanvasScaler.referenceResolution.x,CanvasScaler.referenceResolution.y);
+    }
+    public void SetLoadingScreen(bool active) 
+    {
+        LoadingScreen.gameObject.SetActive(active);
     }
 }

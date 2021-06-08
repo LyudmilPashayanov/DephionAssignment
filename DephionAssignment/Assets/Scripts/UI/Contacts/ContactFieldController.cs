@@ -8,22 +8,12 @@ public class ContactFieldController : MonoBehaviour, IPoolFields
 {
     public ContactFieldView m_view;
 
-
-    public void Start() 
-    {
-        
-    }
-
     public void UpdateField(IPoolData contactObject)
     {
         Contact contact = (Contact)contactObject;
         gameObject.name = contact.FirstName;
         if (contact.Photo != null)
-            m_view.UpdateProfilePhoto(UIManager.Instance.m_ContactsAtlas.GetSprite(contact.Photo));
-        else
-        {
-
-        }
+            m_view.UpdateProfilePhoto(ContactsCatalogManager.Instance.GetProfileImage(contact.Photo));
 
         m_view.UpdateName(contact.FirstName, contact.LastName);
         if(contact.Phone != null)

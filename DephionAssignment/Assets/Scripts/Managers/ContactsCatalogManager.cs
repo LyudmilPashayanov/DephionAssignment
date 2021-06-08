@@ -11,6 +11,7 @@ public class ContactsCatalogManager : MonoBehaviour
 
     public List<Contact> m_MyContacts = new List<Contact>();
     public Contact m_MyProfile = new Contact();
+    public List<ProfileImage> m_ProfileImages = new List<ProfileImage>();
 
     public event Action onContactAdded;
     public event Action onContactEdited;
@@ -37,6 +38,19 @@ public class ContactsCatalogManager : MonoBehaviour
         m_MyContacts = myContacts;
         m_MyProfile = myProfile;
         UIManager.Instance.m_AllContactsController.InitializeMyContacts(m_MyContacts, m_MyProfile);
+    }
+
+    public void SetAvailablePictures(List<string> imagesAvailable) 
+    {
+        foreach (var imageName in imagesAvailable)
+        {
+            m_ProfileImages.Add(new ProfileImage(imageName, UIManager.Instance.m_ProfileImagesAtlas.GetSprite(imageName)));
+        }
+    }
+
+    public Sprite GetProfileImage(string imageName) 
+    {
+        return m_ProfileImages.FirstOrDefault(n => n.PhotoName == imageName).PhotoSprite;
     }
 
     public void CreateContact(Contact contact) 

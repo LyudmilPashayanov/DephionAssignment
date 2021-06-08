@@ -16,6 +16,10 @@ public class AllContactsView : MonoBehaviour
     [SerializeField] private Image ClearOrSearch_Image;
     [SerializeField] private Button AddContact_Button;
     [SerializeField] private Button MyProfile_Button;
+    [SerializeField] private Button ProfilePicture_Button;
+    [SerializeField] private Image ProfilePicture_Image;
+
+
     public void RemoveAllListeners() 
     {
         SortAlphabetically_Button.onClick.RemoveAllListeners();
@@ -25,6 +29,7 @@ public class AllContactsView : MonoBehaviour
         AddContact_Button.onClick.RemoveAllListeners();
         MyName_InputField.onEndEdit.RemoveAllListeners();
         MyProfile_Button.onClick.RemoveAllListeners();
+        ProfilePicture_Button.onClick.RemoveAllListeners();
     }
 
     public void AddListeners(UnityAction<string> filterOnEndEdit, UnityAction sortAlphabetically, UnityAction sortByDate,UnityAction AddContactNavigation,
@@ -38,6 +43,7 @@ public class AllContactsView : MonoBehaviour
         AddContact_Button.onClick.AddListener(AddContactNavigation);
         MyName_InputField.onEndEdit.AddListener(OnEndAddingMyName);
         MyProfile_Button.onClick.AddListener(EditMyProfile);
+        ProfilePicture_Button.onClick.AddListener(EditMyProfile);
     }
 
     public void SelectSearchField()
@@ -49,6 +55,7 @@ public class AllContactsView : MonoBehaviour
     public void SetMyProfile(Contact myProfile) 
     {
         MyName_InputField.text = myProfile.FirstName;
+        ProfilePicture_Image.sprite = ContactsCatalogManager.Instance.GetProfileImage(myProfile.Photo);
     }
 
     public void ChangeButtonToClear(UnityAction clearSearchField) 

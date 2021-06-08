@@ -33,7 +33,7 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
         PoolTail = 0;
         Pool = list;
         ItemHeight = prefab.rect.height;
-        ScrollRect.onValueChanged.AddListener(OnDragDetectionPositionChange);        
+        ScrollRect.onValueChanged.AddListener(OnDragDetectionPositionChange);
         DragDetection.sizeDelta = new Vector2(DragDetection.sizeDelta.x, Pool.Count * ItemHeight);
         for (int i = 0; i < TargetVisibleItemCount+BufferSize; i++)
         {
@@ -81,7 +81,6 @@ public class PoolController : MonoBehaviour, IBeginDragHandler
             PoolTail++;
         }
         Content.DOAnchorPos(Vector2.zero,0.1f);
-        
     }
 
     public void OnDragDetectionPositionChange(Vector2 dragNormalizePos)

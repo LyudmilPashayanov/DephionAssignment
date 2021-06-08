@@ -10,7 +10,7 @@ public class AllContactsController : IUIPage
 {
     [SerializeField] private AllContactsView m_view;
 
-    public List<Contact> showedContacts = new List<Contact>();
+    private List<Contact> ShowedContacts = new List<Contact>();
 
     public RectTransform m_ContactFieldPrefab;
     public PoolController m_ContactsScrollView;
@@ -27,16 +27,9 @@ public class AllContactsController : IUIPage
         ContactsCatalogManager.Instance.onContactDeleted += new Action(() => { UpdateListOfContacts(ContactsCatalogManager.Instance.m_MyContacts, true); }); ;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T)) 
-        {
-        }
-    }
-
     public void InitializeMyContacts(List<Contact> allContacts, Contact m_MyProfile) 
     {
-        showedContacts = allContacts;
+        ShowedContacts = allContacts;
         m_ContactsScrollView.Setup(GetMyContactsAlphabetically().ToList<IPoolData>(), m_ContactFieldPrefab);
         m_view.SetMyProfile(m_MyProfile);
     }
@@ -46,12 +39,12 @@ public class AllContactsController : IUIPage
         List<Contact> filteredContacts = new List<Contact>();
         foreach (Contact contact in ContactsCatalogManager.Instance.m_MyContacts)
         {
-            if (contact.FirstName.Contains(text)) 
+            if (contact.FirstName.ToLower().Contains(text.ToLower())) 
             {
                 filteredContacts.Add(contact);
             }
         }
-        showedContacts = filteredContacts;
+        ShowedContacts = filteredContacts;
         m_ContactsScrollView.UpdatePooler(filteredContacts.ToList<IPoolData>(),false,m_ContactFieldPrefab);
         Debug.Log("filtering contacts.");
         ChangeButtonToClear();
@@ -59,7 +52,7 @@ public class AllContactsController : IUIPage
 
     public void UpdateListOfContacts(List<Contact> list, bool forceUpdate) 
     {
-        showedContacts = list;
+        ShowedContacts = list;
         m_ContactsScrollView.UpdatePooler(list.ToList<IPoolData>(), forceUpdate, m_ContactFieldPrefab);
     }
 
@@ -74,8 +67,8 @@ public class AllContactsController : IUIPage
     {
         if (m_view.IsSearchBarEmpty())
             return;
-        showedContacts = ContactsCatalogManager.Instance.m_MyContacts;
-        m_ContactsScrollView.UpdatePooler(showedContacts.ToList<IPoolData>(), true, m_ContactFieldPrefab);
+        ShowedContacts = ContactsCatalogManager.Instance.m_MyContacts;
+        m_ContactsScrollView.UpdatePooler(ShowedContacts.ToList<IPoolData>(), true, m_ContactFieldPrefab);
         m_view.ClearSearchBar();
         m_view.ChangeIconToMagnifierImage();
         m_view.ChangeButtonToSearch();
@@ -115,12 +108,12 @@ public class AllContactsController : IUIPage
 
     public List<Contact> GetMyContactsAlphabetically() 
     {
-        return showedContacts.OrderBy(c => c.FirstName).ToList();
+        return ShowedContacts.OrderBy(c => c.FirstName).ToList();
     }
 
     public List<Contact> GetMyContactsByCreationTime()
     {
-        return showedContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
+        return ShowedContacts.OrderBy(c => c.DateAddedTimestamp).ToList();
     }
 
     public override void OnPageLeaving()

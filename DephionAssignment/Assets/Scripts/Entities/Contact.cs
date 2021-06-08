@@ -25,7 +25,21 @@ public class Contact : IPoolData
     public string Email { get; set; }
     public string Twitter { get; set; }
     public string Phone { get; set; }
-    public string Photo { get; set; }
+
+    private string photo;
+    public string Photo
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(this.photo))
+            {
+                this.photo = "default";
+            }
+            return this.photo;
+        }
+        set => this.photo = value;
+    }
+
     private long dateAddedTimestamp;
     public long DateAddedTimestamp
     {

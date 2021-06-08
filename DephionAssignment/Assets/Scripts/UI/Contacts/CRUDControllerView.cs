@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class CRUDControllerView : MonoBehaviour
 {
     [SerializeField] private TMP_InputField FirstName_InputField;
@@ -14,24 +14,32 @@ public class CRUDControllerView : MonoBehaviour
     [SerializeField] private TMP_InputField Email_InputField;
     [SerializeField] private TMP_InputField Twitter_InputField;
 
+    [SerializeField] private Image ProfilePicture_Image;
+
     [SerializeField] private TextMeshProUGUI Header_Text;
 
     [SerializeField] private Button Save_Button;
     [SerializeField] private Button Cancel_Button;
     [SerializeField] private Button Delete_Button;
+    [SerializeField] private Button EditPicture_Button;
+
+    [SerializeField] private RectTransform EditPictureUI;
+
 
     public void RemoveListeners() 
     {
         Save_Button.onClick.RemoveAllListeners();
         Cancel_Button.onClick.RemoveAllListeners();
         Delete_Button.onClick.RemoveAllListeners();
+        EditPicture_Button.onClick.RemoveAllListeners();
     }
 
-    public void SetListeners(UnityAction SaveButtonFunctionality, UnityAction CancelButtonFunctionality,UnityAction DeleteContact) 
+    public void SetListeners(UnityAction SaveButtonFunctionality, UnityAction CancelButtonFunctionality,UnityAction DeleteContact,UnityAction EditPicture) 
     {
         Save_Button.onClick.AddListener(SaveButtonFunctionality);
         Cancel_Button.onClick.AddListener(CancelButtonFunctionality);
         Delete_Button.onClick.AddListener(DeleteContact);
+        EditPicture_Button.onClick.AddListener(EditPicture);
     }
 
     public void ActivateDeleteButton(bool active) 
@@ -70,7 +78,34 @@ public class CRUDControllerView : MonoBehaviour
         {
             Twitter_InputField.text = contact.Twitter;
         }
+        if(contact.Photo != null) 
+        {
+            ProfilePicture_Image.sprite = ContactsCatalogManager.Instance.GetProfileImage(contact.Photo);
+        }
     }
+
+    public void SetNewProfilePicture(string image) 
+    {
+        ProfilePicture_Image.sprite = UIManager.Instance.m_ProfileImagesAtlas.GetSprite(image);
+    }
+
+    public void ShowEditPictureUI(bool active)
+    {
+        Vector2 goToScale = UIManager.Instance.GetCanvasSize();
+        if (active) 
+        {
+            EditPictureUI.gameObject.SetActive(true);
+            DOTween.Sequence()
+                //.Append(EditPictureUI.DOSizeDelta(new Vector2(0,goToScale.y), 0.1f))
+                .Append(EditPictureUI.DOSizeDelta(new Vector2(goToScale.x, goToScale.y), 0.2f));
+            return;
+        }
+        DOTween.Sequence()
+                //.Append(EditPictureUI.DOSizeDelta(new Vector2(0, goToScale.y), 0.1f))
+                .Append(EditPictureUI.DOSizeDelta(new Vector2(0, 0), 0.2f))
+                .AppendCallback(() => { EditPictureUI.gameObject.SetActive(false); });
+    }
+
 
     public void ClearAllFields() 
     {
