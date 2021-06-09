@@ -108,18 +108,18 @@ public class CRUDControllerView : MonoBehaviour
 
     public void ShowEditPictureUI(bool active)
     {
-        Vector2 goToScale = UIManager.Instance.GetCanvasSize();
+       // Vector2 goToScale = UIManager.Instance.GetCanvasSize();
         if (active) 
         {
             EditPictureUI.gameObject.SetActive(true);
             DOTween.Sequence()
                 //.Append(EditPictureUI.DOSizeDelta(new Vector2(0,goToScale.y), 0.1f))
-                .Append(EditPictureUI.DOSizeDelta(new Vector2(goToScale.x, goToScale.y), 0.2f));
+                .Append(EditPictureUI.DOScale(new Vector2(1, 1), 0.2f));
             return;
         }
         DOTween.Sequence()
                 //.Append(EditPictureUI.DOSizeDelta(new Vector2(0, goToScale.y), 0.1f))
-                .Append(EditPictureUI.DOSizeDelta(new Vector2(0, 0), 0.2f))
+                .Append(EditPictureUI.DOScale(new Vector2(0, 0), 0.2f))
                 .AppendCallback(() => { EditPictureUI.gameObject.SetActive(false); });
     }
 
