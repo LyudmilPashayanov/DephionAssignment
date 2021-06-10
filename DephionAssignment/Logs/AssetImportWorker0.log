@@ -1,0 +1,295 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.0f1 (c7b5465681fb) revision 13088070'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Enterprise; OS build 19042.631; Version 2009; 64bit' Language: 'en' Physical Memory: 8060 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+F:\Softwares\unity\2020.3.0f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+F:/DephionAssignment/DephionAssignment/DephionAssignment
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+64301
+Successfully changed project path to: F:/DephionAssignment/DephionAssignment/DephionAssignment
+F:/DephionAssignment/DephionAssignment/DephionAssignment
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 70.41 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.0f1 (c7b5465681fb)
+[Subsystems] Discovering subsystems at path F:/Softwares/unity/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path F:/DephionAssignment/DephionAssignment/DephionAssignment/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce 940MX (ID=0x179c)
+    Vendor:   
+    VRAM:     2010 MB
+    Driver:   27.21.14.6663
+Initialize mono
+Mono path[0] = 'F:/Softwares/unity/2020.3.0f1/Editor/Data/Managed'
+Mono path[1] = 'F:/Softwares/unity/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'F:/Softwares/unity/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56404
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: F:/Softwares/unity/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002425 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 89.73 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.390 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.002145 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 69.08 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+CreateSerializedAsset is not supported while importing out-of-process
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+PlayFab.PfEditor.PlayFabEditorPrefsSO:get_Instance () (at Assets/Plugins/PlayFabEditorExtensions/Editor/Scripts/Utils/PlayFabEditorPrefsSO.cs:38)
+PlayFab.PfEditor.SubMenuComponent:RegisterMenuItem (string,System.Action) (at Assets/Plugins/PlayFabEditorExtensions/Editor/Scripts/Components/SubMenuComponent.cs:42)
+PlayFab.PfEditor.PlayFabEditorDataMenu:RegisterMenu () (at Assets/Plugins/PlayFabEditorExtensions/Editor/Scripts/Panels/PlayFabEditorDataMenu.cs:93)
+PlayFab.PfEditor.PlayFabEditorDataMenu:.cctor () (at Assets/Plugins/PlayFabEditorExtensions/Editor/Scripts/Panels/PlayFabEditorDataMenu.cs:74)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+[Assets/Plugins/PlayFabEditorExtensions/Editor/Scripts/Utils/PlayFabEditorPrefsSO.cs line 38]
+
+UnityEngine.UnityException: Creating asset at path Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset failed.
+  at (wrapper managed-to-native) UnityEditor.AssetDatabase.CreateAsset(UnityEngine.Object,string)
+  at PlayFab.PfEditor.PlayFabEditorPrefsSO.get_Instance () [0x0009d] in F:\DephionAssignment\DephionAssignment\DephionAssignment\Assets\Plugins\PlayFabEditorExtensions\Editor\Scripts\Utils\PlayFabEditorPrefsSO.cs:38 
+  at PlayFab.PfEditor.SubMenuComponent.RegisterMenuItem (System.String n, System.Action m) [0x00017] in F:\DephionAssignment\DephionAssignment\DephionAssignment\Assets\Plugins\PlayFabEditorExtensions\Editor\Scripts\Components\SubMenuComponent.cs:42 
+  at PlayFab.PfEditor.PlayFabEditorDataMenu.RegisterMenu () [0x0001c] in F:\DephionAssignment\DephionAssignment\DephionAssignment\Assets\Plugins\PlayFabEditorExtensions\Editor\Scripts\Panels\PlayFabEditorDataMenu.cs:93 
+  at PlayFab.PfEditor.PlayFabEditorDataMenu..cctor () [0x00043] in F:\DephionAssignment\DephionAssignment\DephionAssignment\Assets\Plugins\PlayFabEditorExtensions\Editor\Scripts\Panels\PlayFabEditorDataMenu.cs:74 
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.029 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.10 seconds
+Refreshing native plugins compatible for Editor in 0.69 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2585 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 121.7 MB.
+System memory in use after: 119.5 MB.
+
+Unloading 52 unused Assets to reduce memory usage. Loaded Objects now: 2998.
+Total: 7.378600 ms (FindLiveObjects: 1.052800 ms CreateObjectMapping: 0.607400 ms MarkObjects: 3.611800 ms  DeleteObjects: 2.104400 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/PlayFabEditorExtensions/Editor
+  artifactKey: Guid(f4907c2eddf10bf4fad2feceb65aaa76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabEditorExtensions/Editor using Guid(f4907c2eddf10bf4fad2feceb65aaa76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bca27fd5621bc04ba63e6cc16119460d') in 0.088588 seconds
+  Import took 0.110552 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016913 seconds.
+  path: Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset
+  artifactKey: Guid(4ee2c188518ee064fbd9f518d6fbc824) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset using Guid(4ee2c188518ee064fbd9f518d6fbc824) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17bb2570c02bfd3f9acdcde8e7a083db') in 0.142763 seconds
+  Import took 0.212648 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000720 seconds.
+  path: Assets/PlayFabEditorExtensions
+  artifactKey: Guid(5437675f4db046042bf681bbb758a4c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabEditorExtensions using Guid(5437675f4db046042bf681bbb758a4c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '256e79dd7f40f40efdd7f01b3853e4a5') in 0.021321 seconds
+  Import took 0.029605 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 51.139541 seconds.
+  path: Assets/Plugins/PlayFabEditorExtensions/Editor/PlayFabEditorExtensions.asmdef
+  artifactKey: Guid(8f342294dfb958a4694b67859092b749) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/PlayFabEditorExtensions/Editor/PlayFabEditorExtensions.asmdef using Guid(8f342294dfb958a4694b67859092b749) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13b67eee027a87a4c99d4c1b93df1d3d') in 0.385564 seconds
+  Import took 1.190565 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.918708 seconds.
+  path: Assets/Plugins/PlayFabEditorExtensions
+  artifactKey: Guid(e6b6b62449f1f4ed1bdf033d7f2d2ccf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/PlayFabEditorExtensions using Guid(e6b6b62449f1f4ed1bdf033d7f2d2ccf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddba75dde2d370e7091629799172a936') in 0.212910 seconds
+  Import took 0.375225 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.540204 seconds.
+  path: Assets/Plugins/PlayFabSDK
+  artifactKey: Guid(e53d5e839d5caa945b9b859abe15689b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/PlayFabSDK using Guid(e53d5e839d5caa945b9b859abe15689b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a98044f5dad1c575010345b222c0fea') in 0.012950 seconds
+  Import took 0.113438 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.386990 seconds.
+  path: Assets/Plugins/Demigiant
+  artifactKey: Guid(ef51f7da2b514b4408a5deb4bbb8ce06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Demigiant using Guid(ef51f7da2b514b4408a5deb4bbb8ce06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50c4f660ca6a55d025a5685f90324f38') in 0.014175 seconds
+  Import took 0.046483 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003067 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.50 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.669 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.70 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2468 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 117.1 MB.
+System memory in use after: 114.9 MB.
+
+Unloading 44 unused Assets to reduce memory usage. Loaded Objects now: 3000.
+Total: 4.404900 ms (FindLiveObjects: 0.310000 ms CreateObjectMapping: 0.156700 ms MarkObjects: 2.442200 ms  DeleteObjects: 1.494700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002738 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.53 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.607 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2468 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 117.0 MB.
+System memory in use after: 114.8 MB.
+
+Unloading 43 unused Assets to reduce memory usage. Loaded Objects now: 3003.
+Total: 7.620300 ms (FindLiveObjects: 1.030800 ms CreateObjectMapping: 0.678400 ms MarkObjects: 3.802500 ms  DeleteObjects: 2.106800 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 122.017320 seconds.
+  path: Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
+  artifactKey: Guid(698b2db098268c640929a7b8090a31eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset using Guid(698b2db098268c640929a7b8090a31eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2e709d81c75b71f4c63264b10a14ea8') in 0.093159 seconds
+  Import took 0.109795 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003294 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.50 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.917 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.48 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2468 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 117.0 MB.
+System memory in use after: 114.8 MB.
+
+Unloading 43 unused Assets to reduce memory usage. Loaded Objects now: 3006.
+Total: 9.210000 ms (FindLiveObjects: 0.422500 ms CreateObjectMapping: 0.241900 ms MarkObjects: 3.298600 ms  DeleteObjects: 5.240100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 401.689940 seconds.
+  path: Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
+  artifactKey: Guid(698b2db098268c640929a7b8090a31eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset using Guid(698b2db098268c640929a7b8090a31eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8ac6b091a1dcfb38b39b5b8d875beb5') in 0.018151 seconds
+  Import took 0.053802 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001909 seconds.
+  path: Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
+  artifactKey: Guid(698b2db098268c640929a7b8090a31eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset using Guid(698b2db098268c640929a7b8090a31eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8ac6b091a1dcfb38b39b5b8d875beb5') in 0.011931 seconds
+  Import took 0.018637 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.527770 seconds.
+  path: Assets/PlayFabSDK/Shared/Public/Resources
+  artifactKey: Guid(c770a70afd8f88f40bb0f25e3b0dbb55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabSDK/Shared/Public/Resources using Guid(c770a70afd8f88f40bb0f25e3b0dbb55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b3cbe3367d2cd8da18988b2f15017e70') in 0.063887 seconds
+  Import took 0.068601 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.112698 seconds.
+  path: Assets/PlayFabSDK/Shared/Public
+  artifactKey: Guid(85636a5aec9f04e91a75e422c19ff5da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PlayFabSDK/Shared/Public using Guid(85636a5aec9f04e91a75e422c19ff5da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a674f7838ee4d143a0b160d73745a3e') in 0.074554 seconds
+  Import took 0.108199 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005385 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.658 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2468 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 117.1 MB.
+System memory in use after: 114.8 MB.
+
+Unloading 43 unused Assets to reduce memory usage. Loaded Objects now: 3009.
+Total: 5.276700 ms (FindLiveObjects: 0.365900 ms CreateObjectMapping: 0.154500 ms MarkObjects: 2.244100 ms  DeleteObjects: 2.510000 ms)
+
